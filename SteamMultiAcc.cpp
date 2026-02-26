@@ -15,12 +15,14 @@
 
 using namespace std;
 
+// ВОТ ЗДЕСЬ Я ВЕРНУЛ MMR!
 struct MySteamAccount {
     string username;
     string password;
     string rank_name = "Unknown";
+    int mmr = 0;              // <--- Вернули ПТС на место
     int behavior = 0;
-    int communication = 0; // ВЕЖЛИВОСТЬ
+    int communication = 0;    // ВЕЖЛИВОСТЬ
     bool lp = false;
 };
 
@@ -59,6 +61,11 @@ void LoadStats(vector<MySteamAccount>& accList) {
             size_t s = line.find(": \"") + 3;
             string val = line.substr(s, line.find("\"", s) - s);
             for (auto& a : accList) if (a.username == currentAcc) a.rank_name = val;
+        }
+        if (line.find("\"mmr\":") != string::npos) { // ЧИТАЕМ ПТС
+            size_t pos = line.find(":");
+            int val = stoi(line.substr(pos + 1));
+            for (auto& a : accList) if (a.username == currentAcc) a.mmr = val;
         }
         if (line.find("\"behavior\":") != string::npos) {
             size_t pos = line.find(":");
@@ -157,7 +164,7 @@ int main() {
             string stats = "Поряд: " + to_string(accounts[i].behavior) + " | Вежл: " + to_string(accounts[i].communication);
 
             ImGui::Text(title.c_str());
-            ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.0f, 1.0f), stats.c_str()); // Желтоватый цвет для стат
+            ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.0f, 1.0f), stats.c_str());
 
             if (ImGui::Button(("ВОЙТИ##" + to_string(i)).c_str(), ImVec2(-1, 30))) {
                 LoginSteam(accounts[i].username, accounts[i].password);
