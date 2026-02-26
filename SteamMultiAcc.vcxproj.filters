@@ -63,4 +63,7 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DotaParser\parser.py" />
+  </ItemGroup>
 </Project>

@@ -188,6 +188,14 @@ int main() {
 
         ImGui::Separator();
 
+        // КНОПКА ЗАПУСКА ПИТОН-ПАРСЕРА
+        if (ImGui::Button("ОБНОВИТЬ СТАТИСТИКУ ДОТЫ", ImVec2(-1, 40))) {
+            // Используем "py", так как через него у тебя все заработало
+            system("py DotaParser/parser.py");
+        }
+        ImGui::Separator();
+        // ------------------------------------
+
         if (accounts.empty()) {
             ImGui::Text("Файл accounts.txt пуст или не найден!");
         }
