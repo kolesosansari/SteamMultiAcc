@@ -2,12 +2,11 @@
 import json
 import os
 import time
-import re
 from steam.client import SteamClient
 from dota2.client import Dota2Client
-from steam.webauth import WebAuth # Используем прямую браузерную авторизацию
 import logging
 
+# Отключаем мусорные логи об устаревших пакетах
 logging.getLogger('dota2').setLevel(logging.CRITICAL)
 logging.getLogger('steam').setLevel(logging.CRITICAL)
 
@@ -39,46 +38,20 @@ def get_stats():
         acc_data = {"username": user, "rank_name": "Без ранга", "mmr": 0, "behavior": 0, "communication": 0, "lp": False, "ok": False}
         print(f"\n[*] Проверка аккаунта: {user}...")
 
-        # 1. ПРЯМАЯ БРАУЗЕРНАЯ АВТОРИЗАЦИЯ ДЛЯ ПОРЯДОЧНОСТИ
-        try:
-            print("  [~] Вхожу через WebAuth (эмуляция браузера)...")
-            wa = WebAuth(user)
-            session = wa.login(password)
-            
-            if session:
-                url = f"https://steamcommunity.com/profiles/{wa.steam_id}/gcpd/570/?category=Account&tab=MatchPlayerReportIncoming"
-                res = session.get(url, timeout=10)
-                rows = re.findall(r'<tr[^>]*>(.*?)</tr>', res.text, re.DOTALL | re.IGNORECASE)
-                for row in reversed(rows):
-                    cols = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL | re.IGNORECASE)
-                    nums = []
-                    for td in cols:
-                        text = re.sub(r'<[^>]+>', '', td).strip()
-                        text = re.sub(r'[\s,.]+', '', text)
-                        if text.isdigit(): nums.append(int(text))
-                    if len(nums) >= 2:
-                        b, c = nums[-2], nums[-1]
-                        if 1 <= b <= 12000 and 1 <= c <= 12000:
-                            acc_data["behavior"] = b
-                            acc_data["communication"] = c
-                            print(f"  [+] WebAPI: Порядочность {b}, Вежливость {c}")
-                            break
-            else:
-                print("  [-] WebAuth вернул пустую сессию.")
-        except Exception as e:
-            print(f"  [-] Ошибка WebAuth: {e}")
-
-        # 2. АВТОРИЗАЦИЯ В КЛИЕНТЕ РАДИ МЕДАЛИ
         client = SteamClient()
         dota = Dota2Client(client)
 
         @client.on('logged_on')
         def start_dota():
-            print("  [~] Steam API авторизован, получаю медаль профиля...")
-            dota.launch() # Без параметров, просто логин в координатор
+            print("  [~] Steam API авторизован, запускаю Dota 2 GC...")
+            dota.launch()
 
         @dota.on('ready')
         def fetch_data():
+            print("  [~] Координатор Доты ответил, перехватываю пакеты...")
+            client.sleep(1)
+            
+            # 1. Запрос медали
             try:
                 job_card = dota.request_profile_card(client.steam_id.as_32)
                 card = dota.wait_msg(job_card, timeout=5)
@@ -89,16 +62,42 @@ def get_stats():
                             acc_data["mmr"] = slot.stat.stat_score
                     if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
                         acc_data["lp"] = True
-                    print(f"  [+] Медаль получена: {acc_data['rank_name']}")
             except: pass
-            acc_data["ok"] = True
+
+            # 2. Кидаем прямой запрос на Сводку порядочности (ID 7393)
+            try:
+                dota.send(7393, {'account_id': client.steam_id.as_32})
+            except: pass
+
+        # --- СЛУШАТЕЛИ ПАКЕТОВ ПОРЯДОЧНОСТИ ---
+        
+        # Перехватываем создание/обновление кэша аккаунта сервером
+        @dota.on('so_create')
+        @dota.on('so_update')
+        def on_so_update(so):
+            if hasattr(so, 'behavior_score'):
+                acc_data["behavior"] = so.behavior_score
+            if hasattr(so, 'communication_score'):
+                acc_data["communication"] = so.communication_score
+
+        # Перехватываем прямой ответ на наш запрос сводки (ID 7394)
+        @dota.on(7394)
+        def on_conduct(msg):
+            if hasattr(msg, 'behavior_score'):
+                acc_data["behavior"] = msg.behavior_score
+            if hasattr(msg, 'communication_score'):
+                acc_data["communication"] = msg.communication_score
 
         result = client.login(user, password)
         if result == 1:
             start = time.time()
-            while not acc_data["ok"] and time.time() - start < 15:
+            # Даем скрипту 10 секунд поймать пакет с порядочностью
+            while time.time() - start < 10:
+                if acc_data["behavior"] > 0:
+                    break
                 client.sleep(0.5)
             
+            acc_data["ok"] = True
             print(f"  [v] Итог: {acc_data['rank_name']} | Поряд: {acc_data['behavior']} | Вежл: {acc_data['communication']}")
             results.append(acc_data)
             client.disconnect()
