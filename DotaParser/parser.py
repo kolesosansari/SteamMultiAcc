@@ -2,6 +2,7 @@
 import json
 import os
 import time
+import re
 from steam.client import SteamClient
 from dota2.client import Dota2Client
 
@@ -51,25 +52,15 @@ def get_stats():
 
         @client.on('logged_on')
         def start_dota():
-            print("  [~] Успешный логин Steam, запускаю Dota 2 GC...")
+            print("  [~] Steam авторизован, запускаю Dota 2 GC...")
             dota.launch()
 
         @dota.on('ready')
         def fetch_data():
             print("  [~] Координатор Доты ответил!")
-            # Даем клиенту 1.5 секунды, чтобы он успел обработать пакет account_info, который присылается при старте
-            client.sleep(1.5)
+            client.sleep(1) # Даем координатору прогрузиться
 
-            # 1. ЧИТАЕМ ПОРЯДОЧНОСТЬ ИЗ БАЗОВОЙ ИНФЫ (Без запросов!)
-            if dota.account_info:
-                acc_data["behavior"] = getattr(dota.account_info, 'behavior_score', 0)
-                acc_data["communication"] = getattr(dota.account_info, 'communication_score', 0)
-                print(f"  [+] Порядочность: {acc_data['behavior']} | Вежливость: {acc_data['communication']}")
-            else:
-                print("  [-] Координатор не прислал account_info.")
-
-            # 2. Быстрый запрос карточки для получения медали
-            print("  [~] Читаю медаль профиля...")
+            # 1. ЗАПРАШИВАЕМ МЕДАЛЬ (таймаут 5 секунд)
             try:
                 job_card = dota.request_profile_card(client.steam_id.as_32)
                 card = dota.wait_msg(job_card, timeout=5)
@@ -80,20 +71,50 @@ def get_stats():
                             acc_data["mmr"] = slot.stat.stat_score
                     if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
                         acc_data["lp"] = True
-            except Exception as e:
-                print("  [-] Ошибка при парсинге медали.")
+            except Exception:
+                pass
+
+            # 2. ЗАПРАШИВАЕМ ПОРЯДОЧНОСТЬ У КООРДИНАТОРА (таймаут 5 секунд)
+            try:
+                job_conduct = dota.request_conduct_scorecard()
+                conduct = dota.wait_msg(job_conduct, timeout=5)
+                if conduct:
+                    acc_data["behavior"] = getattr(conduct, 'behavior_score', 0)
+                    acc_data["communication"] = getattr(conduct, 'communication_score', 0)
+            except Exception:
+                pass
 
             acc_data["ok"] = True
 
         result = client.login(user, password)
         if result == 1:
+            # 3. ПОКА ДОТА ГРУЗИТСЯ, ПЫТАЕМСЯ ВЫТЯНУТЬ ЦИФРЫ ИЗ STEAM WEB API (Страница GDPR)
+            client.sleep(2) # Пауза для получения веб-токенов
+            session = client.get_web_session()
+            if session:
+                try:
+                    url = f"https://steamcommunity.com/profiles/{client.steam_id}/gcpd/570/?category=Account&tab=MatchPlayerReportIncoming"
+                    res = session.get(url, timeout=8)
+                    rows = re.findall(r'<tr[^>]*>(.*?)</tr>', res.text, re.DOTALL | re.IGNORECASE)
+                    for row in reversed(rows):
+                        cols = re.findall(r'<td[^>]*>\s*(\d+)\s*</td>', row, re.IGNORECASE)
+                        if len(cols) >= 2:
+                            b = int(cols[-2])
+                            c = int(cols[-1])
+                            if b > 0 and c > 0:
+                                acc_data["behavior"] = b
+                                acc_data["communication"] = c
+                                break
+                except Exception:
+                    pass
+
             start = time.time()
-            # Ждем макс 15 секунд на всю процедуру
+            # Ждем завершения работы Доты (не больше 15 секунд)
             while not acc_data["ok"] and time.time() - start < 15:
                 client.sleep(0.5)
             
             if acc_data["ok"]:
-                print(f"  [v] Данные собраны! Медаль: {acc_data['rank_name']}")
+                print(f"  [v] Данные собраны! Медаль: {acc_data['rank_name']} | Поряд: {acc_data['behavior']} | Вежл: {acc_data['communication']}")
             else:
                 print("  [-] Таймаут ожидания GC Dota 2.")
             
