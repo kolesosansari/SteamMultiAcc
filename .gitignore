@@ -1,0 +1,10 @@
+.vs/
+x64/
+Debug/
+Release/
+*.user
+*.aps
+*.suo
+imgui.ini
+# Если в accounts.txt реальные пароли, его ТОЖЕ добавь сюда:
+accounts.txt
