@@ -22,7 +22,10 @@ def get_medal_name(tier):
     return f"{MEDALS.get(major, 'Unknown')} {minor}"
 
 def get_stats():
-    if not os.path.exists(ACCOUNTS_PATH): return
+    if not os.path.exists(ACCOUNTS_PATH): 
+        print("accounts.txt не найден!")
+        return
+        
     results = []
     with open(ACCOUNTS_PATH, 'r', encoding='utf-8') as f:
         lines = f.readlines()
@@ -36,7 +39,7 @@ def get_stats():
         dota = Dota2Client(client)
         acc_data = {
             "username": user, 
-            "rank_name": "Unknown", 
+            "rank_name": "Без ранга", 
             "mmr": 0, 
             "behavior": 0, 
             "communication": 0,
@@ -44,43 +47,63 @@ def get_stats():
             "ok": False
         }
 
+        print(f"[*] Проверка аккаунта: {user}...")
+
+        @client.on('logged_on')
+        def start_dota():
+            dota.launch()
+
         @dota.on('ready')
         def fetch_data():
-            # Запрашиваем карточку (ранг и ПТС в слотах)
-            dota.request_profile_card(client.steam_id.as_32)
-            # Запрашиваем сводку порядочности и вежливости
-            dota.request_conduct_scorecard()
+            try:
+                # 1. Запрашиваем карточку (Ждем макс 5 секунд)
+                job_card = dota.request_profile_card(client.steam_id.as_32)
+                card = dota.wait_msg(job_card, timeout=5)
+                if card:
+                    acc_data["rank_name"] = get_medal_name(getattr(card, 'rank_tier', 0))
+                    for slot in getattr(card, 'slots', []):
+                        if hasattr(slot, 'stat') and slot.stat.stat_id == 1:
+                            acc_data["mmr"] = slot.stat.stat_score
+                    if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
+                        acc_data["lp"] = True
+            except Exception as e:
+                pass
 
-        @dota.on('profile_card')
-        def parse_card(account_id, card):
-            acc_data["rank_name"] = get_medal_name(getattr(card, 'rank_tier', 0))
-            # Ищем ПТС в слотах, если они выставлены на показ
-            for slot in getattr(card, 'slots', []):
-                if hasattr(slot, 'stat') and slot.stat.stat_id == 1: # 1 обычно Solo MMR
-                    acc_data["mmr"] = slot.stat.stat_score
-            
-            if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
-                acc_data["lp"] = True
+            try:
+                # 2. Запрашиваем порядочность (Ждем макс 5 секунд)
+                job_conduct = dota.request_conduct_scorecard()
+                conduct = dota.wait_msg(job_conduct, timeout=5)
+                if conduct:
+                    acc_data["behavior"] = getattr(conduct, 'behavior_score', 0)
+                    acc_data["communication"] = getattr(conduct, 'communication_score', 0)
+            except Exception as e:
+                pass
 
-        @dota.on('conduct_scorecard')
-        def parse_conduct(msg):
-            # behavior_score и communication_score — те самые цифры до 12000
-            acc_data["behavior"] = getattr(msg, 'behavior_score', 0)
-            acc_data["communication"] = getattr(msg, 'communication_score', 0)
+            # Флаг того, что мы прошли все запросы (успешно или нет - неважно)
             acc_data["ok"] = True
 
         result = client.login(user, password)
         if result == 1:
             start = time.time()
-            while not acc_data["ok"] and time.time() - start < 25:
+            # Общий таймаут ожидания логина и запросов — 15 секунд
+            while not acc_data["ok"] and time.time() - start < 15:
                 client.sleep(0.5)
+            
+            if acc_data["ok"]:
+                print(f"  [+] Успех: {acc_data['rank_name']} | Поряд: {acc_data['behavior']}")
+            else:
+                print("  [-] Таймаут ожидания координатора Доты.")
+            
             results.append(acc_data)
             client.disconnect()
         else:
-            results.append({"username": user, "rank_name": "Ошибка входа"})
+            acc_data["rank_name"] = "Ошибка входа"
+            results.append(acc_data)
+            print("  [-] Ошибка логина Steam.")
 
     with open(STATS_PATH, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=4, ensure_ascii=False)
+    print("\n[SUCCESS] stats.json обновлен!")
 
 if __name__ == "__main__":
     get_stats()

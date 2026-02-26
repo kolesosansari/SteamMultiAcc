@@ -1,18 +1,20 @@
 [
     {
         "username": "sy7095338",
-        "rank_name": "Без ранга",
+        "rank_name": "Unknown",
         "mmr": 0,
         "behavior": 0,
+        "communication": 0,
         "lp": false,
-        "ok": true
+        "ok": false
     },
     {
         "username": "vm5632065",
-        "rank_name": "Рыцарь 1",
-        "mmr": 31,
+        "rank_name": "Unknown",
+        "mmr": 0,
         "behavior": 0,
+        "communication": 0,
         "lp": false,
-        "ok": true
+        "ok": false
     }
 ]
