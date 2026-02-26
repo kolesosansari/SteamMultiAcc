@@ -35,7 +35,7 @@ def get_stats():
         user, password = parts[0], parts[1]
         
         acc_data = {"username": user, "rank_name": "Без ранга", "mmr": 0, "behavior": 0, "communication": 0, "lp": False, "ok": False}
-        print(f"\n[*] Проверка аккаунта: {user}...")
+        print(f"\n[*] Вскрытие аккаунта: {user}...")
 
         client = SteamClient()
         dota = Dota2Client(client)
@@ -46,40 +46,44 @@ def get_stats():
 
         @dota.on('ready')
         def fetch_data():
-            print("  [~] GC ответил. Ищу CSODOTAGameAccountClient...")
-            client.sleep(2) # Ждем, пока сервер закинет объект в кэш
+            print("  [~] GC ответил. ДЕЛАЮ ГЛУБОКИЙ ДАМП ПАРАМЕТРОВ...")
+            client.sleep(2) # Ждем прогрузки кэша
             
-            # --- БЕЗОПАСНОЕ ЧТЕНИЕ КЭША ---
-            if hasattr(dota, 'socache'):
-                for obj_type in getattr(dota, 'socache', {}):
-                    try:
-                        data = dota.socache[obj_type]
-                        # Умная обработка: если это один объект, делаем из него список для проверки
-                        items = []
-                        if isinstance(data, list): items = data
-                        elif isinstance(data, dict): items = list(data.values())
-                        else: items = [data]
-                        
-                        for obj in items:
-                            # БИНГО! Вот тут мы ловим тот самый объект, который выдал ошибку
-                            if hasattr(obj, 'behavior_score'):
-                                acc_data["behavior"] = getattr(obj, 'behavior_score', 0)
-                                acc_data["communication"] = getattr(obj, 'communication_score', acc_data["behavior"])
-                                print(f"  [+] Найдена порядочность: {acc_data['behavior']}")
-                    except Exception:
-                        pass
+            # --- СОЗДАНИЕ ГЛУБОКОГО ДАМПА ---
+            dump_file = os.path.join(BASE_DIR, f"deep_dump_{user}.txt")
+            try:
+                with open(dump_file, "w", encoding="utf-8") as df:
+                    df.write(f"=== DEEP DUMP FOR {user} ===\n\n")
+                    if hasattr(dota, 'socache'):
+                        for obj_type, obj_data in dota.socache.items():
+                            df.write(f"\n[TYPE {obj_type}]\n")
+                            items = []
+                            if isinstance(obj_data, list): items = obj_data
+                            elif isinstance(obj_data, dict): items = list(obj_data.values())
+                            else: items = [obj_data]
+                            
+                            for obj in items:
+                                df.write(f"  Class: {type(obj).__name__}\n")
+                                # ВОТ ТУТ МЫ ДОСТАЕМ ВСЕ ПЕРЕМЕННЫЕ ИЗ ОБЪЕКТА
+                                for attr in dir(obj):
+                                    if not attr.startswith('_'): # Игнорируем системный мусор питона
+                                        try:
+                                            val = getattr(obj, attr)
+                                            if not callable(val): # Записываем только значения (цифры, строки)
+                                                df.write(f"    {attr}: {val}\n")
+                                        except: pass
+                    else:
+                        df.write("socache пуст или отсутствует.\n")
+                print(f"  [+] Файл deep_dump_{user}.txt успешно создан!")
+            except Exception as e:
+                print(f"  [-] Ошибка записи дампа: {e}")
 
-            # Запрос медали
+            # Забираем хотя бы медаль для UI
             try:
                 job_card = dota.request_profile_card(client.steam_id.as_32)
                 card = dota.wait_msg(job_card, timeout=5)
                 if card:
                     acc_data["rank_name"] = get_medal_name(getattr(card, 'rank_tier', 0))
-                    for slot in getattr(card, 'slots', []):
-                        if hasattr(slot, 'stat') and slot.stat.stat_id == 1:
-                            acc_data["mmr"] = slot.stat.stat_score
-                    if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
-                        acc_data["lp"] = True
             except: pass
 
             acc_data["ok"] = True
@@ -90,18 +94,16 @@ def get_stats():
             while not acc_data["ok"] and time.time() - start < 15:
                 client.sleep(0.5)
             
-            if acc_data["ok"]:
-                print(f"  [v] Итог: {acc_data['rank_name']} | Поряд: {acc_data['behavior']} | Вежл: {acc_data['communication']}")
+            print(f"  [v] Итог: Медаль: {acc_data['rank_name']}")
             results.append(acc_data)
             client.disconnect()
         else:
             acc_data["rank_name"] = "Ошибка входа"
             results.append(acc_data)
-            print("  [-] Ошибка логина Steam.")
 
     with open(STATS_PATH, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=4, ensure_ascii=False)
-    print("\n[SUCCESS] stats.json обновлен!")
+    print("\n[SUCCESS] Вскрытие завершено!")
 
 if __name__ == "__main__":
     get_stats()
