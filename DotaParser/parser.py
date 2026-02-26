@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ACCOUNTS_PATH = os.path.join(BASE_DIR, '../accounts.txt')
 STATS_PATH = os.path.join(BASE_DIR, '../stats.json')
 
-# Таблица медалей
+# Словарь для перевода рангов
 MEDALS = {
     0: "Без ранга",
     1: "Рекрут", 2: "Страж", 3: "Рыцарь", 4: "Герой",
@@ -17,7 +17,7 @@ MEDALS = {
 }
 
 def get_medal_name(tier):
-    if not tier or tier == 0: return "Unranked"
+    if not tier or tier == 0: return "Без ранга"
     major = tier // 10
     minor = tier % 10
     return f"{MEDALS.get(major, 'Unknown')} {minor}"
@@ -40,16 +40,13 @@ def get_stats():
             "username": user, 
             "rank_name": "Unknown", 
             "mmr": 0, 
-            "behavior": 10000, # По умолчанию
-            "avatar": "", 
+            "behavior": 0, 
             "lp": False, 
             "ok": False
         }
 
         @client.on('logged_on')
         def start_dota():
-            # Исправленный способ получения аватарки
-            acc_data["avatar"] = client.user.get_avatar_url()
             dota.launch()
 
         @dota.on('ready')
@@ -58,10 +55,12 @@ def get_stats():
 
         @dota.on('profile_card')
         def parse_card(account_id, card):
+            # Переводим число 31 -> Рыцарь 1
             acc_data["rank_name"] = get_medal_name(getattr(card, 'rank_tier', 0))
-            # В карточке rank_tier 31 это и есть "3 звезда 1 медаль"
+            # ПТС в Доте через API карточки отдается как rank_tier. 
+            # Настоящие ПТС (цифры) Valve скрывают, но мы выведем примерный тир
             acc_data["mmr"] = getattr(card, 'rank_tier', 0) 
-            acc_data["behavior"] = getattr(card, 'behavior_score', 10000)
+            acc_data["behavior"] = getattr(card, 'behavior_score', 0)
             
             if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
                 acc_data["lp"] = True
@@ -75,7 +74,7 @@ def get_stats():
             results.append(acc_data)
             client.disconnect()
         else:
-            results.append({"username": user, "rank_name": "Ошибка входа", "mmr": -1})
+            results.append({"username": user, "rank_name": "Ошибка входа", "mmr": 0, "behavior": 0})
 
     with open(STATS_PATH, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=4, ensure_ascii=False)

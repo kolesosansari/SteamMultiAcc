@@ -18,9 +18,9 @@ using namespace std;
 struct MySteamAccount {
     string username;
     string password;
-    string rank_name = "Unknown"; // Добавили имя ранга
+    string rank_name = "Unknown";
     int mmr = 0;
-    int behavior = 10000;         // Добавили порядочность
+    int behavior = 0;
     bool lp = false;
 };
 
@@ -46,7 +46,9 @@ vector<MySteamAccount> LoadAccounts() {
         MySteamAccount acc;
         acc.username = user;
         acc.password = pass;
-        acc.rank = 0;
+        acc.rank_name = "Unknown";
+        acc.mmr = 0;
+        acc.behavior = 0;
         acc.lp = false;
         accs.push_back(acc);
     }
@@ -63,15 +65,20 @@ void LoadStats(vector<MySteamAccount>& accList) {
             size_t s = line.find(": \"") + 3;
             currentAcc = line.substr(s, line.find("\"", s) - s);
         }
-        if (line.find("\"rank_name\":") != std::string::npos) { // Ищем название медали
+        if (line.find("\"rank_name\":") != std::string::npos) {
             size_t s = line.find(": \"") + 3;
             string rn = line.substr(s, line.find("\"", s) - s);
             for (auto& a : accList) if (a.username == currentAcc) a.rank_name = rn;
         }
-        if (line.find("\"behavior\":") != std::string::npos) { // Ищем порядочность
+        if (line.find("\"mmr\":") != std::string::npos) {
             size_t pos = line.find(":");
-            int beh = stoi(line.substr(pos + 1));
-            for (auto& a : accList) if (a.username == currentAcc) a.behavior = beh;
+            int m = stoi(line.substr(pos + 1));
+            for (auto& a : accList) if (a.username == currentAcc) a.mmr = m;
+        }
+        if (line.find("\"behavior\":") != std::string::npos) {
+            size_t pos = line.find(":");
+            int b = stoi(line.substr(pos + 1));
+            for (auto& a : accList) if (a.username == currentAcc) a.behavior = b;
         }
         if (line.find("\"lp\":") != std::string::npos) {
             bool isLp = (line.find("true") != std::string::npos);
@@ -94,9 +101,7 @@ void CreateRenderTarget() {
         pBackBuffer->Release();
     }
 }
-
 void CleanupRenderTarget() { if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = nullptr; } }
-
 bool CreateDeviceD3D(HWND hWnd) {
     DXGI_SWAP_CHAIN_DESC sd = {};
     sd.BufferCount = 2;
@@ -111,14 +116,12 @@ bool CreateDeviceD3D(HWND hWnd) {
     CreateRenderTarget();
     return true;
 }
-
 void CleanupDeviceD3D() {
     CleanupRenderTarget();
     if (g_pSwapChain) g_pSwapChain->Release();
     if (g_pd3dDeviceContext) g_pd3dDeviceContext->Release();
     if (g_pd3dDevice) g_pd3dDevice->Release();
 }
-
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam)) return true;
@@ -133,13 +136,12 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 }
 
 int main() {
-    // ВЕЗДЕ ИСПОЛЬЗУЕМ ИМЯ accounts
     vector<MySteamAccount> accounts = LoadAccounts();
     LoadStats(accounts);
 
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"SteamMultiClass", nullptr };
     RegisterClassExW(&wc);
-    HWND hwnd = CreateWindowW(wc.lpszClassName, L"Steam Multi-Acc Boss", WS_OVERLAPPEDWINDOW, 100, 100, 450, 600, nullptr, nullptr, wc.hInstance, nullptr);
+    HWND hwnd = CreateWindowW(wc.lpszClassName, L"Steam Multi-Acc Boss", WS_OVERLAPPEDWINDOW, 100, 100, 500, 600, nullptr, nullptr, wc.hInstance, nullptr);
 
     if (!CreateDeviceD3D(hwnd)) return 1;
 
@@ -180,9 +182,11 @@ int main() {
         ImGui::Separator();
 
         for (size_t i = 0; i < accounts.size(); i++) {
+            // Формируем красивую строку для кнопки
             string label = accounts[i].username + " | " + accounts[i].rank_name;
+            if (accounts[i].mmr > 0) label += " (" + to_string(accounts[i].mmr) + " MMR)";
             label += " | Beh: " + to_string(accounts[i].behavior);
-            if (accounts[i].lp) label += " [LOW PRIO!]";
+            if (accounts[i].lp) label += " [LP!]";
 
             if (ImGui::Button(label.c_str(), ImVec2(-1, 45))) {
                 LoginSteam(accounts[i].username, accounts[i].password);
