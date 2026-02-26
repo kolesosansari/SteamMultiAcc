@@ -149,20 +149,21 @@ int main() {
         ImGui::Separator();
 
         for (size_t i = 0; i < accounts.size(); i++) {
-            // Делаем красивый текст: Логин | Медаль
+            // Название аккаунта и медаль
             string title = accounts[i].username + " | " + accounts[i].rank_name;
-            // Вторая строка: Порядочность и Вежливость
-            string stats = "Beh: " + to_string(accounts[i].behavior) + " | Comm: " + to_string(accounts[i].communication);
+            if (accounts[i].mmr > 0) title += " (" + to_string(accounts[i].mmr) + " ПТС)";
+
+            // Статистика по порядочности и вежливости
+            string stats = "Поряд: " + to_string(accounts[i].behavior) + " | Вежл: " + to_string(accounts[i].communication);
 
             ImGui::Text(title.c_str());
-            ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), stats.c_str());
+            ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.0f, 1.0f), stats.c_str()); // Желтоватый цвет для стат
 
-            string btnLabel = "ВОЙТИ В " + accounts[i].username + "##" + to_string(i);
-            if (ImGui::Button(btnLabel.c_str(), ImVec2(-1, 35))) {
+            if (ImGui::Button(("ВОЙТИ##" + to_string(i)).c_str(), ImVec2(-1, 30))) {
                 LoginSteam(accounts[i].username, accounts[i].password);
             }
+            if (accounts[i].lp) ImGui::TextColored(ImVec4(1, 0, 0, 1), "[!] LOW PRIORITY");
             ImGui::Separator();
-            ImGui::Spacing();
         }
 
         ImGui::End();

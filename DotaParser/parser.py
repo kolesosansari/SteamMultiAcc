@@ -4,7 +4,6 @@ import os
 import time
 from steam.client import SteamClient
 from dota2.client import Dota2Client
-from dota2.enums import EDOTAGCMsg # Добавили правильный импорт
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ACCOUNTS_PATH = os.path.join(BASE_DIR, '../accounts.txt')
@@ -42,45 +41,40 @@ def get_stats():
             "behavior": 0, 
             "communication": 0,
             "lp": False, 
-            "card_ok": False,
-            "conduct_ok": False
+            "ok": False
         }
-
-        @client.on('logged_on')
-        def start_dota():
-            dota.launch()
 
         @dota.on('ready')
         def fetch_data():
+            # Запрашиваем карточку (ранг и ПТС в слотах)
             dota.request_profile_card(client.steam_id.as_32)
-            # Правильный вызов запроса порядочности
-            dota.send(EDOTAGCMsg.EMsgGCCMGetPlayerConductScore, {'account_id': client.steam_id.as_32})
+            # Запрашиваем сводку порядочности и вежливости
+            dota.request_conduct_scorecard()
 
         @dota.on('profile_card')
         def parse_card(account_id, card):
             acc_data["rank_name"] = get_medal_name(getattr(card, 'rank_tier', 0))
-            acc_data["mmr"] = getattr(card, 'rank_tier', 0) 
-            acc_data["card_ok"] = True
+            # Ищем ПТС в слотах, если они выставлены на показ
+            for slot in getattr(card, 'slots', []):
+                if hasattr(slot, 'stat') and slot.stat.stat_id == 1: # 1 обычно Solo MMR
+                    acc_data["mmr"] = slot.stat.stat_score
+            
+            if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
+                acc_data["lp"] = True
 
-        @dota.on(EDOTAGCMsg.EMsgGCCMGetPlayerConductScoreResponse)
+        @dota.on('conduct_scorecard')
         def parse_conduct(msg):
-            # Парсим и порядочность, и вежливость
+            # behavior_score и communication_score — те самые цифры до 12000
             acc_data["behavior"] = getattr(msg, 'behavior_score', 0)
             acc_data["communication"] = getattr(msg, 'communication_score', 0)
-            acc_data["conduct_ok"] = True
+            acc_data["ok"] = True
 
         result = client.login(user, password)
         if result == 1:
             start = time.time()
-            # Ждем оба ответа (карточку и порядочность)
-            while not (acc_data["card_ok"] and acc_data["conduct_ok"]) and time.time() - start < 25:
-                client.sleep(0.2)
-            
-            # Убираем временные флаги
-            final_data = acc_data.copy()
-            final_data.pop("card_ok")
-            final_data.pop("conduct_ok")
-            results.append(final_data)
+            while not acc_data["ok"] and time.time() - start < 25:
+                client.sleep(0.5)
+            results.append(acc_data)
             client.disconnect()
         else:
             results.append({"username": user, "rank_name": "Ошибка входа"})
