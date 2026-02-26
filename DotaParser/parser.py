@@ -2,7 +2,6 @@
 import json
 import os
 import time
-import re
 from steam.client import SteamClient
 from dota2.client import Dota2Client
 
@@ -52,49 +51,25 @@ def get_stats():
 
         @client.on('logged_on')
         def start_dota():
-            print("  [~] Успешный логин, получаю скрытую страницу GDPR...")
-            try:
-                session = client.get_web_session()
-                if session:
-                    # Используем точный 64-битный ID для надежности
-                    url = f"https://steamcommunity.com/profiles/{client.steam_id}/gcpd/570/?category=Account&tab=MatchPlayerReportIncoming"
-                    res = session.get(url, timeout=15)
-                    
-                    # СОХРАНЯЕМ СТРАНИЦУ ДЛЯ ДЕБАГА
-                    debug_file = os.path.join(BASE_DIR, f"debug_{user}.html")
-                    with open(debug_file, "w", encoding="utf-8") as df:
-                        df.write(res.text)
-                        
-                    # ИЩЕМ ДАННЫЕ УМНЫМ СПОСОБОМ
-                    rows = re.findall(r'<tr[^>]*>(.*?)</tr>', res.text, re.DOTALL | re.IGNORECASE)
-                    found_scores = False
-                    
-                    for row in reversed(rows): # Идем с конца (самые свежие данные)
-                        # Ищем все ячейки только с числами
-                        cols = re.findall(r'<td[^>]*>\s*(\d+)\s*</td>', row, re.IGNORECASE)
-                        if len(cols) >= 2:
-                            b_score = int(cols[-2])
-                            c_score = int(cols[-1])
-                            # Базовая проверка на адекватность
-                            if 0 < b_score <= 12000 and 0 < c_score <= 12000:
-                                acc_data["behavior"] = b_score
-                                acc_data["communication"] = c_score
-                                found_scores = True
-                                print(f"  [+] Найдена Порядочность: {b_score}, Вежливость: {c_score}")
-                                break
-                                
-                    if not found_scores:
-                        print(f"  [-] Цифры не найдены! Открой файл {debug_file} и посмотри, что ответил Steam.")
-                else:
-                    print("  [-] Не удалось получить web-сессию Steam.")
-            except Exception as e:
-                print(f"  [-] Ошибка при парсинге GDPR: {e}")
-            
-            print("  [~] Запускаю Dota 2 для получения медали...")
+            print("  [~] Успешный логин Steam, запускаю Dota 2 GC...")
             dota.launch()
 
         @dota.on('ready')
         def fetch_data():
+            print("  [~] Координатор Доты ответил!")
+            # Даем клиенту 1.5 секунды, чтобы он успел обработать пакет account_info, который присылается при старте
+            client.sleep(1.5)
+
+            # 1. ЧИТАЕМ ПОРЯДОЧНОСТЬ ИЗ БАЗОВОЙ ИНФЫ (Без запросов!)
+            if dota.account_info:
+                acc_data["behavior"] = getattr(dota.account_info, 'behavior_score', 0)
+                acc_data["communication"] = getattr(dota.account_info, 'communication_score', 0)
+                print(f"  [+] Порядочность: {acc_data['behavior']} | Вежливость: {acc_data['communication']}")
+            else:
+                print("  [-] Координатор не прислал account_info.")
+
+            # 2. Быстрый запрос карточки для получения медали
+            print("  [~] Читаю медаль профиля...")
             try:
                 job_card = dota.request_profile_card(client.steam_id.as_32)
                 card = dota.wait_msg(job_card, timeout=5)
@@ -106,18 +81,19 @@ def get_stats():
                     if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
                         acc_data["lp"] = True
             except Exception as e:
-                pass
+                print("  [-] Ошибка при парсинге медали.")
 
             acc_data["ok"] = True
 
         result = client.login(user, password)
         if result == 1:
             start = time.time()
+            # Ждем макс 15 секунд на всю процедуру
             while not acc_data["ok"] and time.time() - start < 15:
                 client.sleep(0.5)
             
             if acc_data["ok"]:
-                print(f"  [v] Данные собраны!")
+                print(f"  [v] Данные собраны! Медаль: {acc_data['rank_name']}")
             else:
                 print("  [-] Таймаут ожидания GC Dota 2.")
             
