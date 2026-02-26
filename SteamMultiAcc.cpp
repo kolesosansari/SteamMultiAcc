@@ -9,28 +9,30 @@
 #include <vector>
 #include <fstream>
 #include <windows.h>
+#include <algorithm>
 
 #pragma comment(lib, "d3d11.lib")
 
 using namespace std;
 
-struct Account {
+// Переименовал структуру, чтобы не было конфликтов с системными типами Windows
+struct MySteamAccount {
     string username;
     string password;
     int rank = 0;
     bool lp = false;
 };
 
-void LoginSteam(string username, string password) {
+void LoginSteam(string u, string p) {
     system("taskkill /f /im steam.exe >nul 2>&1");
     Sleep(2000);
     string steamPath = "C:\\Program Files (x86)\\Steam\\steam.exe";
-    string params = "-login \"" + username + "\" \"" + password + "\"";
+    string params = "-login \"" + u + "\" \"" + p + "\"";
     ShellExecuteA(NULL, "open", steamPath.c_str(), params.c_str(), NULL, SW_SHOWNORMAL);
 }
 
-vector<Account> LoadAccounts() {
-    vector<Account> accounts;
+vector<MySteamAccount> LoadAccounts() {
+    vector<MySteamAccount> accounts;
     ifstream file("accounts.txt");
     if (!file.is_open()) {
         ofstream newFile("accounts.txt");
@@ -38,35 +40,41 @@ vector<Account> LoadAccounts() {
         newFile.close();
         return accounts;
     }
-    string u, p;
-    while (file >> u >> p) {
-        accounts.push_back({ u, p, 0, false });
+    string user, pass;
+    while (file >> user >> pass) {
+        MySteamAccount acc;
+        acc.username = user;
+        acc.password = pass;
+        acc.rank = 0;
+        acc.lp = false;
+        accounts.push_back(acc);
     }
     file.close();
     return accounts;
 }
 
-void LoadStats(vector<Account>& accounts) {
+void LoadStats(vector<MySteamAccount>& accList) {
     ifstream file("stats.json");
     if (!file.is_open()) return;
     string line, currentAcc;
     while (getline(file, line)) {
         if (line.find("\"username\":") != string.npos) {
-            size_t start = line.find(": \"") + 3;
-            currentAcc = line.substr(start, line.find("\"", start) - start);
+            size_t s = line.find(": \"") + 3;
+            currentAcc = line.substr(s, line.find("\"", s) - s);
         }
         if (line.find("\"rank\":") != string.npos) {
-            int rank = stoi(line.substr(line.find(":") + 1));
-            for (auto& acc : accounts) if (acc.username == currentAcc) acc.rank = rank;
+            size_t pos = line.find(":");
+            int r = stoi(line.substr(pos + 1));
+            for (auto& a : accList) if (a.username == currentAcc) a.rank = r;
         }
         if (line.find("\"lp\":") != string.npos) {
-            bool lp = (line.find("true") != string.npos);
-            for (auto& acc : accounts) if (acc.username == currentAcc) acc.lp = lp;
+            bool isLp = (line.find("true") != string.npos);
+            for (auto& a : accList) if (a.username == currentAcc) a.lp = isLp;
         }
     }
-    file.close();
 }
 
+// --- DirectX 11 Boilerplate ---
 static ID3D11Device* g_pd3dDevice = nullptr;
 static ID3D11DeviceContext* g_pd3dDeviceContext = nullptr;
 static IDXGISwapChain* g_pSwapChain = nullptr;
@@ -74,7 +82,8 @@ static ID3D11RenderTargetView* g_mainRenderTargetView = nullptr;
 
 void CreateRenderTarget() {
     ID3D11Texture2D* pBackBuffer = nullptr;
-    if (SUCCEEDED(g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer)))) {
+    HRESULT hr = g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
+    if (SUCCEEDED(hr) && pBackBuffer != nullptr) { // Исправлена ошибка C6387 (pBackBuffer может быть 0)
         g_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &g_mainRenderTargetView);
         pBackBuffer->Release();
     }
@@ -118,8 +127,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 }
 
 int main() {
-    vector<Account> accounts = LoadAccounts();
-    LoadStats(accounts); // ИСПРАВЛЕНО: Убраны типы данных при вызове
+    // ЗАГРУЗКА БЕЗ ТИПОВ ДАННЫХ В ВЫЗОВЕ
+    vector<MySteamAccount> accounts = LoadAccounts();
+    LoadStats(accounts);
 
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"SteamMultiClass", nullptr };
     RegisterClassExW(&wc);
@@ -140,7 +150,7 @@ int main() {
         while (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE)) {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            if (msg.message == WM_QUIT) goto end_label;
+            if (msg.message == WM_QUIT) goto cleanup;
         }
 
         ImGui_ImplDX11_NewFrame();
@@ -149,7 +159,7 @@ int main() {
 
         ImGui::SetNextWindowPos(ImVec2(0, 0));
         ImGui::SetNextWindowSize(io.DisplaySize);
-        ImGui::Begin("Main", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Begin("MainPanel", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
 
         float t = (float)ImGui::GetTime();
         float r, g, b;
@@ -164,11 +174,11 @@ int main() {
         ImGui::Separator();
 
         for (size_t i = 0; i < accounts.size(); i++) {
-            string btnText = accounts[i].username;
-            if (accounts[i].rank > 0) btnText += " | Rank: " + to_string(accounts[i].rank);
-            if (accounts[i].lp) btnText += " [LP!]";
+            string label = accounts[i].username;
+            if (accounts[i].rank > 0) label += " | Rank: " + to_string(accounts[i].rank);
+            if (accounts[i].lp) label += " [LP!]";
 
-            if (ImGui::Button(btnText.c_str(), ImVec2(-1, 45))) { // ИСПРАВЛЕНО: Убран тип string
+            if (ImGui::Button(label.c_str(), ImVec2(-1, 45))) {
                 LoginSteam(accounts[i].username, accounts[i].password);
             }
             ImGui::Spacing();
@@ -183,7 +193,7 @@ int main() {
         g_pSwapChain->Present(1, 0);
     }
 
-end_label:
+cleanup:
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
