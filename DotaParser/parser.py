@@ -48,31 +48,54 @@ def get_stats():
             "ok": False
         }
 
-        print(f"[*] Проверка аккаунта: {user}...")
+        print(f"\n[*] Проверка аккаунта: {user}...")
 
         @client.on('logged_on')
         def start_dota():
-            # 1. ПАРСИМ ПОРЯДОЧНОСТЬ ЧЕРЕЗ STEAM WEB API (GDPR) - МГНОВЕННО И БЕЗ ДОТЫ!
-            session = client.get_web_session()
-            if session:
-                try:
-                    res = session.get("https://steamcommunity.com/my/gcpd/570/?category=Account&tab=MatchPlayerReportIncoming", timeout=10)
-                    # Ищем две последние колонки с цифрами в конце таблицы
-                    matches = re.findall(r'<td>\s*(\d+)\s*</td>\s*<td>\s*(\d+)\s*</td>\s*</tr>', res.text)
-                    if matches:
-                        last_report = matches[-1] # Берем самый свежий отчет
-                        acc_data["behavior"] = int(last_report[0])
-                        acc_data["communication"] = int(last_report[1])
-                except Exception as e:
-                    pass
+            print("  [~] Успешный логин, получаю скрытую страницу GDPR...")
+            try:
+                session = client.get_web_session()
+                if session:
+                    # Используем точный 64-битный ID для надежности
+                    url = f"https://steamcommunity.com/profiles/{client.steam_id}/gcpd/570/?category=Account&tab=MatchPlayerReportIncoming"
+                    res = session.get(url, timeout=15)
+                    
+                    # СОХРАНЯЕМ СТРАНИЦУ ДЛЯ ДЕБАГА
+                    debug_file = os.path.join(BASE_DIR, f"debug_{user}.html")
+                    with open(debug_file, "w", encoding="utf-8") as df:
+                        df.write(res.text)
+                        
+                    # ИЩЕМ ДАННЫЕ УМНЫМ СПОСОБОМ
+                    rows = re.findall(r'<tr[^>]*>(.*?)</tr>', res.text, re.DOTALL | re.IGNORECASE)
+                    found_scores = False
+                    
+                    for row in reversed(rows): # Идем с конца (самые свежие данные)
+                        # Ищем все ячейки только с числами
+                        cols = re.findall(r'<td[^>]*>\s*(\d+)\s*</td>', row, re.IGNORECASE)
+                        if len(cols) >= 2:
+                            b_score = int(cols[-2])
+                            c_score = int(cols[-1])
+                            # Базовая проверка на адекватность
+                            if 0 < b_score <= 12000 and 0 < c_score <= 12000:
+                                acc_data["behavior"] = b_score
+                                acc_data["communication"] = c_score
+                                found_scores = True
+                                print(f"  [+] Найдена Порядочность: {b_score}, Вежливость: {c_score}")
+                                break
+                                
+                    if not found_scores:
+                        print(f"  [-] Цифры не найдены! Открой файл {debug_file} и посмотри, что ответил Steam.")
+                else:
+                    print("  [-] Не удалось получить web-сессию Steam.")
+            except Exception as e:
+                print(f"  [-] Ошибка при парсинге GDPR: {e}")
             
-            # 2. Запускаем Доту ради медали
+            print("  [~] Запускаю Dota 2 для получения медали...")
             dota.launch()
 
         @dota.on('ready')
         def fetch_data():
             try:
-                # Запрашиваем карточку для получения Медали и ПТС
                 job_card = dota.request_profile_card(client.steam_id.as_32)
                 card = dota.wait_msg(job_card, timeout=5)
                 if card:
@@ -94,9 +117,9 @@ def get_stats():
                 client.sleep(0.5)
             
             if acc_data["ok"]:
-                print(f"  [+] Успех: {acc_data['rank_name']} | Поряд: {acc_data['behavior']} | Вежл: {acc_data['communication']}")
+                print(f"  [v] Данные собраны!")
             else:
-                print("  [-] Таймаут ожидания.")
+                print("  [-] Таймаут ожидания GC Dota 2.")
             
             results.append(acc_data)
             client.disconnect()
