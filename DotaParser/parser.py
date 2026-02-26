@@ -5,6 +5,10 @@ import time
 import re
 from steam.client import SteamClient
 from dota2.client import Dota2Client
+import logging
+
+# Убираем спам "Unsupported type" от библиотеки dota2
+logging.getLogger('dota2').setLevel(logging.ERROR)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ACCOUNTS_PATH = os.path.join(BASE_DIR, '../accounts.txt')
@@ -52,15 +56,11 @@ def get_stats():
 
         @client.on('logged_on')
         def start_dota():
-            print("  [~] Steam авторизован, запускаю Dota 2 GC...")
             dota.launch()
 
         @dota.on('ready')
         def fetch_data():
-            print("  [~] Координатор Доты ответил!")
-            client.sleep(1) # Даем координатору прогрузиться
-
-            # 1. ЗАПРАШИВАЕМ МЕДАЛЬ (таймаут 5 секунд)
+            print("  [~] Координатор Доты ответил, читаю медаль...")
             try:
                 job_card = dota.request_profile_card(client.steam_id.as_32)
                 card = dota.wait_msg(job_card, timeout=5)
@@ -72,49 +72,55 @@ def get_stats():
                     if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
                         acc_data["lp"] = True
             except Exception:
-                pass
-
-            # 2. ЗАПРАШИВАЕМ ПОРЯДОЧНОСТЬ У КООРДИНАТОРА (таймаут 5 секунд)
-            try:
-                job_conduct = dota.request_conduct_scorecard()
-                conduct = dota.wait_msg(job_conduct, timeout=5)
-                if conduct:
-                    acc_data["behavior"] = getattr(conduct, 'behavior_score', 0)
-                    acc_data["communication"] = getattr(conduct, 'communication_score', 0)
-            except Exception:
-                pass
+                print("  [-] Не удалось получить карточку профиля Доты")
 
             acc_data["ok"] = True
 
         result = client.login(user, password)
         if result == 1:
-            # 3. ПОКА ДОТА ГРУЗИТСЯ, ПЫТАЕМСЯ ВЫТЯНУТЬ ЦИФРЫ ИЗ STEAM WEB API (Страница GDPR)
-            client.sleep(2) # Пауза для получения веб-токенов
-            session = client.get_web_session()
-            if session:
-                try:
+            print("  [~] Steam авторизован, получаю скрытую страницу GDPR...")
+            try:
+                session = client.get_web_session()
+                if session is None:
+                    print("  [!] ОШИБКА: get_web_session() вернул None!")
+                    print("  [!] Библиотека steam сломана. Выполни команду обновления через pip (в ответе выше)!")
+                else:
                     url = f"https://steamcommunity.com/profiles/{client.steam_id}/gcpd/570/?category=Account&tab=MatchPlayerReportIncoming"
-                    res = session.get(url, timeout=8)
-                    rows = re.findall(r'<tr[^>]*>(.*?)</tr>', res.text, re.DOTALL | re.IGNORECASE)
-                    for row in reversed(rows):
-                        cols = re.findall(r'<td[^>]*>\s*(\d+)\s*</td>', row, re.IGNORECASE)
-                        if len(cols) >= 2:
-                            b = int(cols[-2])
-                            c = int(cols[-1])
-                            if b > 0 and c > 0:
-                                acc_data["behavior"] = b
-                                acc_data["communication"] = c
-                                break
-                except Exception:
-                    pass
+                    res = session.get(url, timeout=10)
+                    if "MatchPlayerReportIncoming" not in res.url:
+                        print("  [-] Ошибка WebAPI: Steam не пустил на страницу (Редирект).")
+                    else:
+                        rows = re.findall(r'<tr[^>]*>(.*?)</tr>', res.text, re.DOTALL | re.IGNORECASE)
+                        found = False
+                        for row in reversed(rows):
+                            tds = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL | re.IGNORECASE)
+                            nums = []
+                            for td in tds:
+                                text = re.sub(r'<[^>]+>', '', td).strip()
+                                text = re.sub(r'[\s,.]+', '', text) # Убираем пробелы и запятые из цифр 10 000
+                                if text.isdigit():
+                                    nums.append(int(text))
+                            
+                            if len(nums) >= 2:
+                                b, c = nums[-2], nums[-1]
+                                if 1 <= b <= 12000 and 1 <= c <= 12000:
+                                    acc_data["behavior"] = b
+                                    acc_data["communication"] = c
+                                    found = True
+                                    print(f"  [+] GDPR успешно: Порядочность {b}, Вежливость {c}")
+                                    break
+                        if not found:
+                            print("  [-] Данные в таблице GDPR не найдены (аккаунт новый или нет репортов).")
+            except Exception as e:
+                print(f"  [-] Ошибка при парсинге GDPR: {e}")
 
             start = time.time()
-            # Ждем завершения работы Доты (не больше 15 секунд)
-            while not acc_data["ok"] and time.time() - start < 15:
+            # Ждем завершения работы Доты
+            while not acc_data["ok"] and time.time() - start < 10:
                 client.sleep(0.5)
             
             if acc_data["ok"]:
-                print(f"  [v] Данные собраны! Медаль: {acc_data['rank_name']} | Поряд: {acc_data['behavior']} | Вежл: {acc_data['communication']}")
+                print(f"  [v] Итог: Медаль: {acc_data['rank_name']} | Поряд: {acc_data['behavior']} | Вежл: {acc_data['communication']}")
             else:
                 print("  [-] Таймаут ожидания GC Dota 2.")
             
