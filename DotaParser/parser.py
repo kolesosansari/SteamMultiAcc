@@ -2,6 +2,7 @@
 import json
 import os
 import time
+import re
 from steam.client import SteamClient
 from dota2.client import Dota2Client
 
@@ -51,12 +52,27 @@ def get_stats():
 
         @client.on('logged_on')
         def start_dota():
+            # 1. ПАРСИМ ПОРЯДОЧНОСТЬ ЧЕРЕЗ STEAM WEB API (GDPR) - МГНОВЕННО И БЕЗ ДОТЫ!
+            session = client.get_web_session()
+            if session:
+                try:
+                    res = session.get("https://steamcommunity.com/my/gcpd/570/?category=Account&tab=MatchPlayerReportIncoming", timeout=10)
+                    # Ищем две последние колонки с цифрами в конце таблицы
+                    matches = re.findall(r'<td>\s*(\d+)\s*</td>\s*<td>\s*(\d+)\s*</td>\s*</tr>', res.text)
+                    if matches:
+                        last_report = matches[-1] # Берем самый свежий отчет
+                        acc_data["behavior"] = int(last_report[0])
+                        acc_data["communication"] = int(last_report[1])
+                except Exception as e:
+                    pass
+            
+            # 2. Запускаем Доту ради медали
             dota.launch()
 
         @dota.on('ready')
         def fetch_data():
             try:
-                # 1. Запрашиваем карточку (Ждем макс 5 секунд)
+                # Запрашиваем карточку для получения Медали и ПТС
                 job_card = dota.request_profile_card(client.steam_id.as_32)
                 card = dota.wait_msg(job_card, timeout=5)
                 if card:
@@ -69,30 +85,18 @@ def get_stats():
             except Exception as e:
                 pass
 
-            try:
-                # 2. Запрашиваем порядочность (Ждем макс 5 секунд)
-                job_conduct = dota.request_conduct_scorecard()
-                conduct = dota.wait_msg(job_conduct, timeout=5)
-                if conduct:
-                    acc_data["behavior"] = getattr(conduct, 'behavior_score', 0)
-                    acc_data["communication"] = getattr(conduct, 'communication_score', 0)
-            except Exception as e:
-                pass
-
-            # Флаг того, что мы прошли все запросы (успешно или нет - неважно)
             acc_data["ok"] = True
 
         result = client.login(user, password)
         if result == 1:
             start = time.time()
-            # Общий таймаут ожидания логина и запросов — 15 секунд
             while not acc_data["ok"] and time.time() - start < 15:
                 client.sleep(0.5)
             
             if acc_data["ok"]:
-                print(f"  [+] Успех: {acc_data['rank_name']} | Поряд: {acc_data['behavior']}")
+                print(f"  [+] Успех: {acc_data['rank_name']} | Поряд: {acc_data['behavior']} | Вежл: {acc_data['communication']}")
             else:
-                print("  [-] Таймаут ожидания координатора Доты.")
+                print("  [-] Таймаут ожидания.")
             
             results.append(acc_data)
             client.disconnect()
