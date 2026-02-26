@@ -161,7 +161,7 @@ int main() {
             if (accounts[i].mmr > 0) title += " (" + to_string(accounts[i].mmr) + " ПТС)";
 
             // Статистика по порядочности и вежливости
-            string stats = "Поряд: " + to_string(accounts[i].behavior) + " | Вежл: " + to_string(accounts[i].communication);
+            string stats = "Поряд: " + to_string(accounts[i].behavior) + " | Вежл: Скрыто";
 
             ImGui::Text(title.c_str());
             ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.0f, 1.0f), stats.c_str());
