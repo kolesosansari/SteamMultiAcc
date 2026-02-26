@@ -149,14 +149,19 @@ int main() {
         ImGui::Separator();
 
         for (size_t i = 0; i < accounts.size(); i++) {
-            // ФОРМИРУЕМ СТРОКУ С ПОДРОБНОСТЯМИ
-            string label = accounts[i].username + " | " + accounts[i].rank_name;
-            label += "\n Beh: " + to_string(accounts[i].behavior) + " | Comm: " + to_string(accounts[i].communication);
-            if (accounts[i].lp) label += " [LOW PRIO!]";
+            // Делаем красивый текст: Логин | Медаль
+            string title = accounts[i].username + " | " + accounts[i].rank_name;
+            // Вторая строка: Порядочность и Вежливость
+            string stats = "Beh: " + to_string(accounts[i].behavior) + " | Comm: " + to_string(accounts[i].communication);
 
-            if (ImGui::Button(label.c_str(), ImVec2(-1, 55))) { // Увеличил высоту кнопки для двух строк
+            ImGui::Text(title.c_str());
+            ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), stats.c_str());
+
+            string btnLabel = "ВОЙТИ В " + accounts[i].username + "##" + to_string(i);
+            if (ImGui::Button(btnLabel.c_str(), ImVec2(-1, 35))) {
                 LoginSteam(accounts[i].username, accounts[i].password);
             }
+            ImGui::Separator();
             ImGui::Spacing();
         }
 
