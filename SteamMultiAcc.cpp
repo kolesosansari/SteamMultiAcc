@@ -128,7 +128,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 int main() {
     // ЗАГРУЗКА БЕЗ ТИПОВ ДАННЫХ В ВЫЗОВЕ
-    vector<MySteamAccount> accounts = LoadAccounts();
+    vector<MySteamAccount> myAccountList = LoadAccounts();
     LoadStats(accounts);
 
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"SteamMultiClass", nullptr };
@@ -173,13 +173,14 @@ int main() {
         }
         ImGui::Separator();
 
-        for (size_t i = 0; i < accounts.size(); i++) {
-            string label = accounts[i].username;
-            if (accounts[i].rank > 0) label += " | Rank: " + to_string(accounts[i].rank);
-            if (accounts[i].lp) label += " [LP!]";
+        for (size_t i = 0; i < myAccountList.size(); i++) {
+            std::string label = myAccountList[i].username;
+            if (myAccountList[i].rank > 0) label += " | Rank: " + std::to_string(myAccountList[i].rank);
+            if (myAccountList[i].lp) label += " [LP!]";
 
             if (ImGui::Button(label.c_str(), ImVec2(-1, 45))) {
-                LoginSteam(accounts[i].username, accounts[i].password);
+                // Вызываем функцию без упоминания типов в скобках
+                LoginSteam(myAccountList[i].username, myAccountList[i].password);
             }
             ImGui::Spacing();
         }
