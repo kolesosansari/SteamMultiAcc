@@ -5,7 +5,6 @@ import time
 from steam.client import SteamClient
 from dota2.client import Dota2Client
 
-# Пути
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ACCOUNTS_PATH = os.path.join(BASE_DIR, '../accounts.txt')
 STATS_PATH = os.path.join(BASE_DIR, '../stats.json')
@@ -56,7 +55,6 @@ def get_stats():
             results.append({"username": user, "rank": -1, "lp": False})
             continue
 
-        # Ждем ответа от серверов (макс 20 сек)
         start = time.time()
         while not acc_data["ok"] and time.time() - start < 20:
             client.sleep(0.1)
