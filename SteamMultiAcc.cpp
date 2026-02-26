@@ -15,7 +15,6 @@
 
 using namespace std;
 
-// Переименовал структуру, чтобы не было конфликтов с системными типами Windows
 struct MySteamAccount {
     string username;
     string password;
@@ -32,13 +31,13 @@ void LoginSteam(string u, string p) {
 }
 
 vector<MySteamAccount> LoadAccounts() {
-    vector<MySteamAccount> accounts;
+    vector<MySteamAccount> accs;
     ifstream file("accounts.txt");
     if (!file.is_open()) {
         ofstream newFile("accounts.txt");
         newFile << "Login1 Password1\n";
         newFile.close();
-        return accounts;
+        return accs;
     }
     string user, pass;
     while (file >> user >> pass) {
@@ -47,10 +46,10 @@ vector<MySteamAccount> LoadAccounts() {
         acc.password = pass;
         acc.rank = 0;
         acc.lp = false;
-        accounts.push_back(acc);
+        accs.push_back(acc);
     }
     file.close();
-    return accounts;
+    return accs;
 }
 
 void LoadStats(vector<MySteamAccount>& accList) {
@@ -58,18 +57,17 @@ void LoadStats(vector<MySteamAccount>& accList) {
     if (!file.is_open()) return;
     string line, currentAcc;
     while (getline(file, line)) {
-        // Везде заменили string.npos на string::npos
-        if (line.find("\"username\":") != string::npos) {
+        if (line.find("\"username\":") != std::string::npos) {
             size_t s = line.find(": \"") + 3;
             currentAcc = line.substr(s, line.find("\"", s) - s);
         }
-        if (line.find("\"rank\":") != string::npos) {
+        if (line.find("\"rank\":") != std::string::npos) {
             size_t pos = line.find(":");
             int r = stoi(line.substr(pos + 1));
             for (auto& a : accList) if (a.username == currentAcc) a.rank = r;
         }
-        if (line.find("\"lp\":") != string::npos) {
-            bool isLp = (line.find("true") != string::npos);
+        if (line.find("\"lp\":") != std::string::npos) {
+            bool isLp = (line.find("true") != std::string::npos);
             for (auto& a : accList) if (a.username == currentAcc) a.lp = isLp;
         }
     }
@@ -84,7 +82,7 @@ static ID3D11RenderTargetView* g_mainRenderTargetView = nullptr;
 void CreateRenderTarget() {
     ID3D11Texture2D* pBackBuffer = nullptr;
     HRESULT hr = g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
-    if (SUCCEEDED(hr) && pBackBuffer != nullptr) { // Исправлена ошибка C6387 (pBackBuffer может быть 0)
+    if (SUCCEEDED(hr) && pBackBuffer != nullptr) {
         g_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &g_mainRenderTargetView);
         pBackBuffer->Release();
     }
@@ -128,7 +126,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 }
 
 int main() {
-    // ЗАГРУЗКА БЕЗ ТИПОВ ДАННЫХ В ВЫЗОВЕ
+    // ВЕЗДЕ ИСПОЛЬЗУЕМ ИМЯ accounts
     vector<MySteamAccount> accounts = LoadAccounts();
     LoadStats(accounts);
 
@@ -174,14 +172,13 @@ int main() {
         }
         ImGui::Separator();
 
-        for (size_t i = 0; i < myAccountList.size(); i++) {
-            std::string label = myAccountList[i].username;
-            if (myAccountList[i].rank > 0) label += " | Rank: " + std::to_string(myAccountList[i].rank);
-            if (myAccountList[i].lp) label += " [LP!]";
+        for (size_t i = 0; i < accounts.size(); i++) {
+            string label = accounts[i].username;
+            if (accounts[i].rank > 0) label += " | Rank: " + to_string(accounts[i].rank);
+            if (accounts[i].lp) label += " [LP!]";
 
             if (ImGui::Button(label.c_str(), ImVec2(-1, 45))) {
-                // Вызываем функцию без упоминания типов в скобках
-                LoginSteam(myAccountList[i].username, myAccountList[i].password);
+                LoginSteam(accounts[i].username, accounts[i].password);
             }
             ImGui::Spacing();
         }
