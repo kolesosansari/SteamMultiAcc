@@ -9,11 +9,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ACCOUNTS_PATH = os.path.join(BASE_DIR, '../accounts.txt')
 STATS_PATH = os.path.join(BASE_DIR, '../stats.json')
 
-# Словарь для перевода рангов
+# Таблица медалей
 MEDALS = {
-    0: "Unranked",
-    1: "Herald", 2: "Guardian", 3: "Crusader", 4: "Archon",
-    5: "Legend", 6: "Ancient", 7: "Divine", 8: "Immortal"
+    0: "Без ранга",
+    1: "Рекрут", 2: "Страж", 3: "Рыцарь", 4: "Герой",
+    5: "Легенда", 6: "Властелин", 7: "Божество", 8: "Титан"
 }
 
 def get_medal_name(tier):
@@ -40,7 +40,7 @@ def get_stats():
             "username": user, 
             "rank_name": "Unknown", 
             "mmr": 0, 
-            "behavior": 0, 
+            "behavior": 10000, # По умолчанию
             "avatar": "", 
             "lp": False, 
             "ok": False
@@ -48,9 +48,8 @@ def get_stats():
 
         @client.on('logged_on')
         def start_dota():
-            # Получаем аватарку через Steam
-            persona = client.get_persona(client.steam_id)
-            acc_data["avatar"] = str(persona.avatar_url) if persona else ""
+            # Исправленный способ получения аватарки
+            acc_data["avatar"] = client.user.get_avatar_url()
             dota.launch()
 
         @dota.on('ready')
@@ -60,13 +59,12 @@ def get_stats():
         @dota.on('profile_card')
         def parse_card(account_id, card):
             acc_data["rank_name"] = get_medal_name(getattr(card, 'rank_tier', 0))
-            # ПТС часто лежит в поле leaderboard_rank или требует доп. запроса
-            # Но в карточке можно достать только примерный тир
-            acc_data["mmr"] = getattr(card, 'rank_tier', 0) # Для примера пока оставим тир
+            # В карточке rank_tier 31 это и есть "3 звезда 1 медаль"
+            acc_data["mmr"] = getattr(card, 'rank_tier', 0) 
+            acc_data["behavior"] = getattr(card, 'behavior_score', 10000)
             
             if hasattr(card, 'low_priority_until_date') and card.low_priority_until_date > time.time():
                 acc_data["lp"] = True
-            
             acc_data["ok"] = True
 
         result = client.login(user, password)
@@ -77,7 +75,7 @@ def get_stats():
             results.append(acc_data)
             client.disconnect()
         else:
-            results.append({"username": user, "rank_name": "Login Error", "mmr": -1})
+            results.append({"username": user, "rank_name": "Ошибка входа", "mmr": -1})
 
     with open(STATS_PATH, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=4, ensure_ascii=False)

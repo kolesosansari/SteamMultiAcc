@@ -1,14 +1,20 @@
 [
     {
         "username": "sy7095338",
-        "rank": 0,
+        "rank_name": "Unknown",
+        "mmr": 0,
+        "behavior": 0,
+        "avatar": "",
         "lp": false,
-        "ok": true
+        "ok": false
     },
     {
         "username": "vm5632065",
-        "rank": 31,
+        "rank_name": "Unknown",
+        "mmr": 0,
+        "behavior": 0,
+        "avatar": "",
         "lp": false,
-        "ok": true
+        "ok": false
     }
 ]

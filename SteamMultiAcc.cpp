@@ -18,7 +18,9 @@ using namespace std;
 struct MySteamAccount {
     string username;
     string password;
-    int rank = 0;
+    string rank_name = "Unknown"; // Добавили имя ранга
+    int mmr = 0;
+    int behavior = 10000;         // Добавили порядочность
     bool lp = false;
 };
 
@@ -61,10 +63,15 @@ void LoadStats(vector<MySteamAccount>& accList) {
             size_t s = line.find(": \"") + 3;
             currentAcc = line.substr(s, line.find("\"", s) - s);
         }
-        if (line.find("\"rank\":") != std::string::npos) {
+        if (line.find("\"rank_name\":") != std::string::npos) { // Ищем название медали
+            size_t s = line.find(": \"") + 3;
+            string rn = line.substr(s, line.find("\"", s) - s);
+            for (auto& a : accList) if (a.username == currentAcc) a.rank_name = rn;
+        }
+        if (line.find("\"behavior\":") != std::string::npos) { // Ищем порядочность
             size_t pos = line.find(":");
-            int r = stoi(line.substr(pos + 1));
-            for (auto& a : accList) if (a.username == currentAcc) a.rank = r;
+            int beh = stoi(line.substr(pos + 1));
+            for (auto& a : accList) if (a.username == currentAcc) a.behavior = beh;
         }
         if (line.find("\"lp\":") != std::string::npos) {
             bool isLp = (line.find("true") != std::string::npos);
@@ -173,9 +180,9 @@ int main() {
         ImGui::Separator();
 
         for (size_t i = 0; i < accounts.size(); i++) {
-            string label = accounts[i].username;
-            if (accounts[i].rank > 0) label += " | Rank: " + to_string(accounts[i].rank);
-            if (accounts[i].lp) label += " [LP!]";
+            string label = accounts[i].username + " | " + accounts[i].rank_name;
+            label += " | Beh: " + to_string(accounts[i].behavior);
+            if (accounts[i].lp) label += " [LOW PRIO!]";
 
             if (ImGui::Button(label.c_str(), ImVec2(-1, 45))) {
                 LoginSteam(accounts[i].username, accounts[i].password);
