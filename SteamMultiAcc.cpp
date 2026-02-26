@@ -10,15 +10,15 @@
 #include <fstream>
 #include <windows.h>
 
-// Указываем компилятору подключить библиотеку DirectX 11
 #pragma comment(lib, "d3d11.lib")
 
 using namespace std;
 
-// --- НАША ЛОГИКА ИЗ ПРОШЛОГО ШАГА ---
 struct Account {
     string username;
     string password;
+    int rank = 0;
+    bool lp = false;
 };
 
 void LoginSteam(string username, string password) {
@@ -34,211 +34,162 @@ vector<Account> LoadAccounts() {
     ifstream file("accounts.txt");
     if (!file.is_open()) {
         ofstream newFile("accounts.txt");
-        newFile << "Login1 Password1\nLogin2 Password2\n";
+        newFile << "Login1 Password1\n";
         newFile.close();
         return accounts;
     }
     string u, p;
     while (file >> u >> p) {
-        accounts.push_back({ u, p });
+        accounts.push_back({ u, p, 0, false });
     }
     file.close();
     return accounts;
 }
-// ------------------------------------
 
-// --- БОЙЛЕРПЛЕЙТ DIRECTX 11 И СОЗДАНИЯ ОКНА ---
+// Чтение статистики из файла, который создал Питон
+void LoadStats(vector<Account>& accs) {
+    ifstream file("stats.json");
+    if (!file.is_open()) return;
+    string line, currentAcc;
+    while (getline(file, line)) {
+        if (line.find("\"username\":") != string.npos) {
+            size_t s = line.find(": \"") + 3;
+            currentAcc = line.substr(s, line.find("\"", s) - s);
+        }
+        if (line.find("\"rank\":") != string.npos) {
+            int r = stoi(line.substr(line.find(":") + 1));
+            for (auto& a : accs) if (a.username == currentAcc) a.rank = r;
+        }
+        if (line.find("\"lp\":") != string.npos) {
+            bool lp = (line.find("true") != string.npos);
+            for (auto& a : accs) if (a.username == currentAcc) a.lp = lp;
+        }
+    }
+}
+
+// --- DirectX & Window Boilerplate ---
 static ID3D11Device* g_pd3dDevice = nullptr;
 static ID3D11DeviceContext* g_pd3dDeviceContext = nullptr;
 static IDXGISwapChain* g_pSwapChain = nullptr;
 static ID3D11RenderTargetView* g_mainRenderTargetView = nullptr;
 
 void CreateRenderTarget() {
-    ID3D11Texture2D* pBackBuffer;
-    g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
-    g_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &g_mainRenderTargetView);
-    pBackBuffer->Release();
+    ID3D11Texture2D* pBackBuffer = nullptr;
+    if (SUCCEEDED(g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer)))) {
+        g_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &g_mainRenderTargetView);
+        pBackBuffer->Release();
+    }
 }
 
-void CleanupRenderTarget() {
-    if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = nullptr; }
-}
+void CleanupRenderTarget() { if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = nullptr; } }
 
 bool CreateDeviceD3D(HWND hWnd) {
-    DXGI_SWAP_CHAIN_DESC sd;
-    ZeroMemory(&sd, sizeof(sd));
+    DXGI_SWAP_CHAIN_DESC sd = {};
     sd.BufferCount = 2;
-    sd.BufferDesc.Width = 0;
-    sd.BufferDesc.Height = 0;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    sd.BufferDesc.RefreshRate.Numerator = 60;
-    sd.BufferDesc.RefreshRate.Denominator = 1;
-    sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.OutputWindow = hWnd;
     sd.SampleDesc.Count = 1;
-    sd.SampleDesc.Quality = 0;
     sd.Windowed = TRUE;
     sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-
-    UINT createDeviceFlags = 0;
-    D3D_FEATURE_LEVEL featureLevel;
-    const D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
-    HRESULT res = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, createDeviceFlags, featureLevelArray, 2, D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice, &featureLevel, &g_pd3dDeviceContext);
-    if (res != S_OK) return false;
+    D3D_FEATURE_LEVEL fl;
+    if (FAILED(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice, &fl, &g_pd3dDeviceContext))) return false;
     CreateRenderTarget();
     return true;
 }
 
 void CleanupDeviceD3D() {
     CleanupRenderTarget();
-    if (g_pSwapChain) { g_pSwapChain->Release(); g_pSwapChain = nullptr; }
-    if (g_pd3dDeviceContext) { g_pd3dDeviceContext->Release(); g_pd3dDeviceContext = nullptr; }
-    if (g_pd3dDevice) { g_pd3dDevice->Release(); g_pd3dDevice = nullptr; }
+    if (g_pSwapChain) g_pSwapChain->Release();
+    if (g_pd3dDeviceContext) g_pd3dDeviceContext->Release();
+    if (g_pd3dDevice) g_pd3dDevice->Release();
 }
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam)) return true;
-    switch (msg) {
-    case WM_SIZE:
-        if (g_pd3dDevice != nullptr && wParam != SIZE_MINIMIZED) {
-            CleanupRenderTarget();
-            g_pSwapChain->ResizeBuffers(0, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam), DXGI_FORMAT_UNKNOWN, 0);
-            CreateRenderTarget();
-        }
-        return 0;
-    case WM_SYSCOMMAND:
-        if ((wParam & 0xfff0) == SC_KEYMENU) return 0; // Отключаем меню по ALT
-        break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
+    if (msg == WM_SIZE && g_pd3dDevice != nullptr && wParam != SIZE_MINIMIZED) {
+        CleanupRenderTarget();
+        g_pSwapChain->ResizeBuffers(0, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam), DXGI_FORMAT_UNKNOWN, 0);
+        CreateRenderTarget();
         return 0;
     }
+    if (msg == WM_DESTROY) { PostQuitMessage(0); return 0; }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
-// ------------------------------------
 
 int main() {
-    // Загружаем наши аккаунты из файла
     vector<Account> accounts = LoadAccounts();
+    LoadStats(accounts); // Пробуем загрузить старые данные
 
-    // Создаем окно Windows
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"SteamMultiClass", nullptr };
-    ::RegisterClassExW(&wc);
-    HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Steam Multi-Acc by Boss", WS_OVERLAPPEDWINDOW, 100, 100, 400, 500, nullptr, nullptr, wc.hInstance, nullptr);
+    RegisterClassExW(&wc);
+    HWND hwnd = CreateWindowW(wc.lpszClassName, L"Steam Multi-Acc Boss", WS_OVERLAPPEDWINDOW, 100, 100, 450, 600, nullptr, nullptr, wc.hInstance, nullptr);
 
-    // Инициализируем Direct3D
-    if (!CreateDeviceD3D(hwnd)) {
-        CleanupDeviceD3D();
-        ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
-        return 1;
-    }
+    if (!CreateDeviceD3D(hwnd)) return 1;
 
-    ::ShowWindow(hwnd, SW_SHOWDEFAULT);
-    ::UpdateWindow(hwnd);
-
-    // Инициализируем ImGui
+    ShowWindow(hwnd, SW_SHOWDEFAULT);
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.Fonts->AddFontFromFileTTF("VMVSegaGenesis-Regular.otf", 10.0f, NULL, io.Fonts->GetGlyphRangesCyrillic());
-    ImGui::StyleColorsDark(); // Темная тема (стильно)
-
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF("VMVSegaGenesis-Regular.otf", 16.0f, NULL, io.Fonts->GetGlyphRangesCyrillic());
     ImGui_ImplWin32_Init(hwnd);
     ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 
-    bool done = false;
-    while (!done) {
+    while (true) {
         MSG msg;
-        while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE)) {
-            ::TranslateMessage(&msg);
-            ::DispatchMessage(&msg);
-            if (msg.message == WM_QUIT) done = true;
+        while (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE)) {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+            if (msg.message == WM_QUIT) goto end;
         }
-        if (done) break;
 
-        // Начинаем новый кадр ImGui
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        // --- РИСУЕМ НАШ ИНТЕРФЕЙС ---
-        // Делаем окно ImGui на весь размер нашего Windows-окна
-        // --- РИСУЕМ НАШ ИНТЕРФЕЙС ---
         ImGui::SetNextWindowPos(ImVec2(0, 0));
         ImGui::SetNextWindowSize(io.DisplaySize);
-        ImGui::Begin("Accounts", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+        ImGui::Begin("Main", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
 
-        // Получаем ширину окна для центрирования
-        float windowWidth = ImGui::GetWindowSize().x;
-
-        // 1. РАДУЖНЫЙ ЗАГОЛОВОК ПО ЦЕНТРУ
-        const char* titleText = "=== STEAM MULTI-ACC BOOTER ===";
-        float titleWidth = ImGui::CalcTextSize(titleText).x;
-        ImGui::SetCursorPosX((windowWidth - titleWidth) * 0.5f); // Сдвигаем курсор на середину
-
-        // Генерируем цвет: берем время работы проги и переводим его в оттенок
-        float time = (float)ImGui::GetTime();
-        float hue = fmodf(time * 0.3f, 1.0f); // 0.3f — это скорость переливания (можешь поменять)
+        // Радужный заголовок
+        float t = (float)ImGui::GetTime();
         float r, g, b;
-        ImGui::ColorConvertHSVtoRGB(hue, 1.0f, 1.0f, r, g, b); // Переводим в RGB
-
-        ImGui::TextColored(ImVec4(r, g, b, 1.0f), titleText); // Рисуем цветной текст
-
+        ImGui::ColorConvertHSVtoRGB(fmodf(t * 0.5f, 1.0f), 1.0f, 1.0f, r, g, b);
+        ImGui::TextColored(ImVec4(r, g, b, 1.0f), "=== STEAM MULTI-ACC BOOTER ===");
         ImGui::Separator();
 
-        // КНОПКА ЗАПУСКА ПИТОН-ПАРСЕРА
-        if (ImGui::Button("ОБНОВИТЬ СТАТИСТИКУ ДОТЫ", ImVec2(-1, 40))) {
-            // Используем "py", так как через него у тебя все заработало
+        if (ImGui::Button("ОБНОВИТЬ ДАННЫЕ ИЗ ДОТЫ", ImVec2(-1, 40))) {
             system("py DotaParser/parser.py");
+            LoadStats(accounts); // Сразу читаем результат
         }
         ImGui::Separator();
-        // ------------------------------------
 
-        if (accounts.empty()) {
-            ImGui::Text("Файл accounts.txt пуст или не найден!");
-        }
-        else {
-            // 2. ЦЕНТРИРУЕМ НАДПИСЬ "ДОСТУПНЫЕ АККАУНТЫ"
-            const char* availText = "Доступные аккаунты";
-            float availWidth = ImGui::CalcTextSize(availText).x;
-            ImGui::SetCursorPosX((windowWidth - availWidth) * 0.5f);
-            ImGui::Text(availText);
+        for (auto& acc : accounts) {
+            string label = acc.username;
+            if (acc.rank > 0) label += " | Rank: " + to_string(acc.rank);
+            if (acc.lp) label += " [LP!]";
+            if (acc.rank == -1) label += " (Error)";
 
-            ImGui::Spacing();
-            ImGui::Spacing(); // Добавил чуть больше отступа перед кнопками
-
-            // Генерируем кнопки для каждого аккаунта
-            for (size_t i = 0; i < accounts.size(); i++) {
-                if (ImGui::Button(accounts[i].username.c_str(), ImVec2(-1, 40))) {
-                    LoginSteam(accounts[i].username, accounts[i].password);
-                }
-                ImGui::Spacing();
+            if (ImGui::Button(label.c_str(), ImVec2(-1, 45))) {
+                LoginSteam(acc.username, acc.password);
             }
+            ImGui::Spacing();
         }
 
         ImGui::End();
-        // ------------------------------
-
-        // Рендеринг
         ImGui::Render();
-        const float clear_color_with_alpha[4] = { 0.1f, 0.1f, 0.1f, 1.0f }; // Цвет фона за окном ImGui
         g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, nullptr);
-        g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, clear_color_with_alpha);
+        float clear_col[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
+        g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, clear_col);
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-        g_pSwapChain->Present(1, 0); // VSync включен
+        g_pSwapChain->Present(1, 0);
     }
 
-    // Очистка при выходе
+end:
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
-
     CleanupDeviceD3D();
-    ::DestroyWindow(hwnd);
-    ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
-
     return 0;
 }
