@@ -58,17 +58,18 @@ void LoadStats(vector<MySteamAccount>& accList) {
     if (!file.is_open()) return;
     string line, currentAcc;
     while (getline(file, line)) {
-        if (line.find("\"username\":") != string.npos) {
+        // Везде заменили string.npos на string::npos
+        if (line.find("\"username\":") != string::npos) {
             size_t s = line.find(": \"") + 3;
             currentAcc = line.substr(s, line.find("\"", s) - s);
         }
-        if (line.find("\"rank\":") != string.npos) {
+        if (line.find("\"rank\":") != string::npos) {
             size_t pos = line.find(":");
             int r = stoi(line.substr(pos + 1));
             for (auto& a : accList) if (a.username == currentAcc) a.rank = r;
         }
-        if (line.find("\"lp\":") != string.npos) {
-            bool isLp = (line.find("true") != string.npos);
+        if (line.find("\"lp\":") != string::npos) {
+            bool isLp = (line.find("true") != string::npos);
             for (auto& a : accList) if (a.username == currentAcc) a.lp = isLp;
         }
     }
@@ -128,7 +129,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 int main() {
     // ЗАГРУЗКА БЕЗ ТИПОВ ДАННЫХ В ВЫЗОВЕ
-    vector<MySteamAccount> myAccountList = LoadAccounts();
+    vector<MySteamAccount> accounts = LoadAccounts();
     LoadStats(accounts);
 
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"SteamMultiClass", nullptr };
