@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "dota2": "^7.0.3",
-    "protobufjs": "^5.0.3",
-    "steam-user": "^5.3.0"
-  }
-}
