@@ -1,0 +1,931 @@
+2026-02-26 16:10:59,311 [DEBUG] SteamClient: Attempting login
+2026-02-26 16:10:59,311 [DEBUG] SteamClient: Connect initiated.
+2026-02-26 16:10:59,311 [DEBUG] CMServerList: Attempting bootstrap via WebAPI
+2026-02-26 16:10:59,313 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.steampowered.com:443
+2026-02-26 16:10:59,849 [DEBUG] urllib3.connectionpool: https://api.steampowered.com:443 "GET /ISteamDirectory/GetCMList/v1/?cellid=0&format=json HTTP/1.1" 200 618
+2026-02-26 16:10:59,850 [DEBUG] CMServerList: Received 81 servers from WebAPI
+2026-02-26 16:10:59,850 [DEBUG] CMServerList: Added 81 new CM addresses.
+2026-02-26 16:10:59,851 [DEBUG] Connection: Attempting connection to ('185.25.183.36', 27017)
+2026-02-26 16:11:00,004 [DEBUG] Connection: Connected.
+2026-02-26 16:11:00,004 [DEBUG] SteamClient: Emit event: 'connected'
+2026-02-26 16:11:00,154 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ChannelEncryptRequest: 1303> | ChannelEncryptRequest)>
+2026-02-26 16:11:00,154 [DEBUG] SteamClient: Emit event: <EMsg.ChannelEncryptRequest: 1303>
+2026-02-26 16:11:00,154 [DEBUG] SteamClient: Securing channel
+2026-02-26 16:11:00,155 [DEBUG] SteamClient: Outgoing: <Msg(<EMsg.ChannelEncryptResponse: 1304> | ChannelEncryptResponse)>
+2026-02-26 16:11:00,307 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ChannelEncryptResult: 1305> | ChannelEncryptResult)>
+2026-02-26 16:11:00,307 [DEBUG] SteamClient: Emit event: <EMsg.ChannelEncryptResult: 1305>
+2026-02-26 16:11:00,307 [DEBUG] SteamClient: Channel secured
+2026-02-26 16:11:00,307 [DEBUG] SteamClient: Emit event: 'channel_secured'
+2026-02-26 16:11:00,307 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientLogon: 5514> | CMsgClientLogon)>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Multi: Decompressing payload (538 -> 1002)
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientLogOnResponse: 751> | CMsgClientLogonResponse)>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Emit event: <EMsg.ClientLogOnResponse: 751>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientAccountInfo: 768> | not parsed)>
+2026-02-26 16:11:01,098 [DEBUG] SteamClient: Emit event: <EMsg.ClientAccountInfo: 768>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientEmailAddrInfo: 5456> | not parsed)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientEmailAddrInfo: 5456>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFriendsList: 767> | CMsgClientFriendsList)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientFriendsList: 767>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPlayerNicknameList: 5587> | not parsed)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientPlayerNicknameList: 5587>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientLicenseList: 780> | CMsgClientLicenseList)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientLicenseList: 780>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ClientUpdateGuestPassesList: 798> | not parsed)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientUpdateGuestPassesList: 798>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientWalletInfoUpdate: 5528> | not parsed)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientWalletInfoUpdate: 5528>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientGameConnectTokens: 779> | not parsed)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientGameConnectTokens: 779>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPlayingSessionState: 9600> | CMsgClientPlayingSessionState)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientPlayingSessionState: 9600>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ClientVACBanStatus: 782> | not parsed)>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Emit event: <EMsg.ClientVACBanStatus: 782>
+2026-02-26 16:11:01,099 [DEBUG] SteamClient: Logon completed
+2026-02-26 16:11:01,100 [DEBUG] SteamClient: Heartbeat started.
+2026-02-26 16:11:01,100 [DEBUG] SteamClient: Emit event: 'logged_on'
+2026-02-26 16:11:01,100 [DEBUG] SteamClient.friends: Emit event: 'ready'
+2026-02-26 16:11:01,100 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientChangeStatus: 716> | CMsgClientChangeStatus)>
+2026-02-26 16:11:01,101 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientGamesPlayed: 742> | CMsgClientGamesPlayed)>
+2026-02-26 16:11:01,101 [DEBUG] Dota2Client: Outgoing: <EGCBaseClientMsg.EMsgGCClientHello: 4006>
+2026-02-26 16:11:01,101 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientToGC: 5452> | CMsgGCClient)>
+2026-02-26 16:11:01,447 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:01,447 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:01,447 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:01,447 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ServiceMethod: 146> | n/a)>
+2026-02-26 16:11:01,447 [DEBUG] SteamClient: Emit event: <EMsg.ServiceMethod: 146>
+2026-02-26 16:11:01,447 [DEBUG] SteamClient: Emit event: 'SteamNotificationClient.NotificationsReceived#1'
+2026-02-26 16:11:01,448 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFriendsGroupsList: 5553> | not parsed)>
+2026-02-26 16:11:01,448 [DEBUG] SteamClient: Emit event: <EMsg.ClientFriendsGroupsList: 5553>
+2026-02-26 16:11:01,497 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:01,497 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:01,497 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:01,497 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:01,497 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:01,701 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:01,701 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:01,701 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:01,701 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:01,701 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:01,848 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:01,848 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:01,848 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:01,848 [DEBUG] SteamClient: Multi: Decompressing payload (200 -> 207)
+2026-02-26 16:11:01,849 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ServiceMethod: 146> | not parsed)>
+2026-02-26 16:11:01,849 [DEBUG] SteamClient: Emit event: <EMsg.ServiceMethod: 146>
+2026-02-26 16:11:01,849 [DEBUG] SteamClient: Emit event: 'PlayerClient.NotifyLastPlayedTimes#1'
+2026-02-26 16:11:01,849 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPlayingSessionState: 9600> | CMsgClientPlayingSessionState)>
+2026-02-26 16:11:01,849 [DEBUG] SteamClient: Emit event: <EMsg.ClientPlayingSessionState: 9600>
+2026-02-26 16:11:01,849 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientGameConnectTokens: 779> | not parsed)>
+2026-02-26 16:11:01,849 [DEBUG] SteamClient: Emit event: <EMsg.ClientGameConnectTokens: 779>
+2026-02-26 16:11:01,897 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:01,897 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:01,897 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:01,897 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:01,897 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:06,104 [DEBUG] Dota2Client: Outgoing: <EGCBaseClientMsg.EMsgGCClientHello: 4006>
+2026-02-26 16:11:06,104 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientToGC: 5452> | CMsgGCClient)>
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Multi: Decompressing payload (5935 -> 15734)
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFromGC: 5453> | CMsgGCClient)>
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Emit event: <EMsg.ClientFromGC: 5453>
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFromGC: 5453> | CMsgGCClient)>
+2026-02-26 16:11:06,698 [DEBUG] SteamClient: Emit event: <EMsg.ClientFromGC: 5453>
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client: Incoming: <ESOMsg.CacheSubscribed: 24>
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client: Emit event: <ESOMsg.CacheSubscribed: 24>
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSOEconItem: 1>)
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSOEconItem: 1>)
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSOEconGameAccountClient: 7>)
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,699 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,700 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,701 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,702 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,703 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,704 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,705 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,706 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,707 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,708 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,709 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,710 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,711 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,712 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,713 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,714 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,715 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,716 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client: Incoming: <EGCBaseClientMsg.EMsgGCClientWelcome: 4004>
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client: Emit event: <EGCBaseClientMsg.EMsgGCClientWelcome: 4004>
+2026-02-26 16:11:06,717 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAGameAccountClient: 2002>)
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAGameAccountPlus: 2012>)
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: 'connection_status'
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: 'ready'
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Got DOTAWelcome
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: 'dota_welcome'
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Incoming: <EGCItemMsg.EMsgGCToClientItemAges: 2591>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: <EGCItemMsg.EMsgGCToClientItemAges: 2591>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgGCTopCustomGamesList: 8024>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgGCTopCustomGamesList: 8024>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgGCToClientMatchGroupsVersion: 8075>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgGCToClientMatchGroupsVersion: 8075>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgDOTAWeekendTourneySchedule: 7465>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgDOTAWeekendTourneySchedule: 7465>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgGCToClientChatRegionsEnabled: 8067>
+2026-02-26 16:11:06,718 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgGCToClientChatRegionsEnabled: 8067>
+2026-02-26 16:11:08,727 [DEBUG] Dota2Client: Outgoing: <EDOTAGCMsg.EMsgClientToGCGetProfileCard: 7534>
+2026-02-26 16:11:08,728 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientToGC: 5452> | CMsgGCClient)>
+2026-02-26 16:11:08,899 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:08,899 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:08,899 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:08,899 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:08,899 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:09,297 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:09,297 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:09,298 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:09,298 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFromGC: 5453> | CMsgGCClient)>
+2026-02-26 16:11:09,298 [DEBUG] SteamClient: Emit event: <EMsg.ClientFromGC: 5453>
+2026-02-26 16:11:09,298 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgClientToGCGetProfileCardResponse: 7535>
+2026-02-26 16:11:09,298 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgClientToGCGetProfileCardResponse: 7535>
+2026-02-26 16:11:09,298 [DEBUG] Dota2Client: Emit event: 'job_1'
+2026-02-26 16:11:09,298 [DEBUG] Dota2Client: Emit event: 'profile_card'
+2026-02-26 16:11:10,103 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientHeartBeat: 703> | CMsgClientHeartBeat)>
+2026-02-26 16:11:10,199 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:10,199 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:10,199 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:10,199 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientIsLimitedAccount: 5430> | not parsed)>
+2026-02-26 16:11:10,199 [DEBUG] SteamClient: Emit event: <EMsg.ClientIsLimitedAccount: 5430>
+2026-02-26 16:11:11,781 [DEBUG] Connection: Disconnected.
+2026-02-26 16:11:11,781 [DEBUG] SteamClient: Emit event: 'disconnected'
+2026-02-26 16:11:11,782 [DEBUG] SteamClient: Attempting login
+2026-02-26 16:11:11,782 [DEBUG] SteamClient: Connect initiated.
+2026-02-26 16:11:11,782 [DEBUG] CMServerList: Attempting bootstrap via WebAPI
+2026-02-26 16:11:11,782 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.steampowered.com:443
+2026-02-26 16:11:12,327 [DEBUG] urllib3.connectionpool: https://api.steampowered.com:443 "GET /ISteamDirectory/GetCMList/v1/?cellid=0&format=json HTTP/1.1" 200 612
+2026-02-26 16:11:12,328 [DEBUG] CMServerList: Received 81 servers from WebAPI
+2026-02-26 16:11:12,329 [DEBUG] CMServerList: Added 81 new CM addresses.
+2026-02-26 16:11:12,329 [DEBUG] Connection: Attempting connection to ('162.254.195.71', 27017)
+2026-02-26 16:11:12,329 [DEBUG] Dota2Client: Emit event: 'connection_status'
+2026-02-26 16:11:12,329 [DEBUG] Dota2Client: Emit event: 'notready'
+2026-02-26 16:11:12,498 [DEBUG] Connection: Connected.
+2026-02-26 16:11:12,498 [DEBUG] SteamClient: Emit event: 'connected'
+2026-02-26 16:11:12,665 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ChannelEncryptRequest: 1303> | ChannelEncryptRequest)>
+2026-02-26 16:11:12,665 [DEBUG] SteamClient: Emit event: <EMsg.ChannelEncryptRequest: 1303>
+2026-02-26 16:11:12,665 [DEBUG] SteamClient: Securing channel
+2026-02-26 16:11:12,665 [DEBUG] SteamClient: Outgoing: <Msg(<EMsg.ChannelEncryptResponse: 1304> | ChannelEncryptResponse)>
+2026-02-26 16:11:12,839 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ChannelEncryptResult: 1305> | ChannelEncryptResult)>
+2026-02-26 16:11:12,839 [DEBUG] SteamClient: Emit event: <EMsg.ChannelEncryptResult: 1305>
+2026-02-26 16:11:12,839 [DEBUG] SteamClient: Channel secured
+2026-02-26 16:11:12,839 [DEBUG] SteamClient: Emit event: 'channel_secured'
+2026-02-26 16:11:12,839 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientLogon: 5514> | CMsgClientLogon)>
+2026-02-26 16:11:13,147 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:13,147 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:13,147 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:13,147 [DEBUG] SteamClient: Multi: Decompressing payload (709 -> 1298)
+2026-02-26 16:11:13,147 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:13,147 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:13,147 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientLogOnResponse: 751> | CMsgClientLogonResponse)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientLogOnResponse: 751>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientAccountInfo: 768> | not parsed)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientAccountInfo: 768>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientEmailAddrInfo: 5456> | not parsed)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientEmailAddrInfo: 5456>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFriendsList: 767> | CMsgClientFriendsList)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientFriendsList: 767>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPlayerNicknameList: 5587> | not parsed)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientPlayerNicknameList: 5587>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientLicenseList: 780> | CMsgClientLicenseList)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientLicenseList: 780>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ClientUpdateGuestPassesList: 798> | not parsed)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientUpdateGuestPassesList: 798>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientWalletInfoUpdate: 5528> | not parsed)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientWalletInfoUpdate: 5528>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientGameConnectTokens: 779> | not parsed)>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Emit event: <EMsg.ClientGameConnectTokens: 779>
+2026-02-26 16:11:13,148 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPlayingSessionState: 9600> | CMsgClientPlayingSessionState)>
+2026-02-26 16:11:13,149 [DEBUG] SteamClient: Emit event: <EMsg.ClientPlayingSessionState: 9600>
+2026-02-26 16:11:13,149 [DEBUG] SteamClient: Incoming: <Msg(<EMsg.ClientVACBanStatus: 782> | not parsed)>
+2026-02-26 16:11:13,149 [DEBUG] SteamClient: Emit event: <EMsg.ClientVACBanStatus: 782>
+2026-02-26 16:11:13,149 [DEBUG] SteamClient: Logon completed
+2026-02-26 16:11:13,149 [DEBUG] SteamClient: Heartbeat started.
+2026-02-26 16:11:13,149 [DEBUG] SteamClient: Emit event: 'logged_on'
+2026-02-26 16:11:13,149 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientRequestFriendData: 815> | CMsgClientRequestFriendData)>
+2026-02-26 16:11:13,149 [DEBUG] SteamClient.friends: Emit event: 'ready'
+2026-02-26 16:11:13,150 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientChangeStatus: 716> | CMsgClientChangeStatus)>
+2026-02-26 16:11:13,150 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientGamesPlayed: 742> | CMsgClientGamesPlayed)>
+2026-02-26 16:11:13,150 [DEBUG] Dota2Client: Outgoing: <EGCBaseClientMsg.EMsgGCClientHello: 4006>
+2026-02-26 16:11:13,150 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientToGC: 5452> | CMsgGCClient)>
+2026-02-26 16:11:13,298 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:13,298 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:13,298 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:13,298 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFriendsGroupsList: 5553> | not parsed)>
+2026-02-26 16:11:13,298 [DEBUG] SteamClient: Emit event: <EMsg.ClientFriendsGroupsList: 5553>
+2026-02-26 16:11:13,401 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:13,401 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:13,401 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:13,401 [DEBUG] SteamClient: Multi: Decompressing payload (514 -> 694)
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,402 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,497 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:13,497 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:13,497 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:13,498 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:13,498 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:13,600 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:13,600 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:13,600 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:13,600 [DEBUG] SteamClient: Multi: Decompressing payload (873 -> 1469)
+2026-02-26 16:11:13,600 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPlayingSessionState: 9600> | CMsgClientPlayingSessionState)>
+2026-02-26 16:11:13,600 [DEBUG] SteamClient: Emit event: <EMsg.ClientPlayingSessionState: 9600>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientGameConnectTokens: 779> | not parsed)>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: <EMsg.ClientGameConnectTokens: 779>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ServiceMethod: 146> | not parsed)>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: <EMsg.ServiceMethod: 146>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: 'PlayerClient.NotifyLastPlayedTimes#1'
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientPersonaState: 766> | CMsgClientPersonaState)>
+2026-02-26 16:11:13,601 [DEBUG] SteamClient: Emit event: <EMsg.ClientPersonaState: 766>
+2026-02-26 16:11:18,166 [DEBUG] Dota2Client: Outgoing: <EGCBaseClientMsg.EMsgGCClientHello: 4006>
+2026-02-26 16:11:18,166 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientToGC: 5452> | CMsgGCClient)>
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Multi: Decompressing payload (6986 -> 17555)
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFromGC: 5453> | CMsgGCClient)>
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Emit event: <EMsg.ClientFromGC: 5453>
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFromGC: 5453> | CMsgGCClient)>
+2026-02-26 16:11:18,498 [DEBUG] SteamClient: Emit event: <EMsg.ClientFromGC: 5453>
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Incoming: <EGCBaseClientMsg.EMsgGCClientWelcome: 4004>
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Emit event: <EGCBaseClientMsg.EMsgGCClientWelcome: 4004>
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAGameAccountClient: 2002>)
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAGameAccountPlus: 2012>)
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Emit event: 'connection_status'
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Emit event: 'ready'
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Got DOTAWelcome
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Emit event: 'dota_welcome'
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Incoming: <EGCItemMsg.EMsgGCToClientItemAges: 2591>
+2026-02-26 16:11:18,499 [DEBUG] Dota2Client: Emit event: <EGCItemMsg.EMsgGCToClientItemAges: 2591>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgGCTopCustomGamesList: 8024>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgGCTopCustomGamesList: 8024>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgGCToClientMatchGroupsVersion: 8075>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgGCToClientMatchGroupsVersion: 8075>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgDOTAWeekendTourneySchedule: 7465>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgDOTAWeekendTourneySchedule: 7465>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgGCToClientChatRegionsEnabled: 8067>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgGCToClientChatRegionsEnabled: 8067>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Incoming: <ESOMsg.CacheSubscribed: 24>
+2026-02-26 16:11:18,500 [DEBUG] Dota2Client: Emit event: <ESOMsg.CacheSubscribed: 24>
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSOEconItem: 1>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSOEconItem: 1>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSOEconGameAccountClient: 7>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,501 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,502 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,503 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,504 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,505 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,506 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,507 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,508 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,509 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,510 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,511 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,512 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,513 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,514 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,515 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,516 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,517 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,518 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:18,519 [DEBUG] Dota2Client.socache: Emit event: ('new', <ESOType.CSODOTAPlayerChallenge: 2010>)
+2026-02-26 16:11:20,506 [DEBUG] Dota2Client: Outgoing: <EDOTAGCMsg.EMsgClientToGCGetProfileCard: 7534>
+2026-02-26 16:11:20,506 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientToGC: 5452> | CMsgGCClient)>
+2026-02-26 16:11:20,700 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:20,700 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:20,700 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:20,700 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientServersAvailable: 5501> | not parsed)>
+2026-02-26 16:11:20,700 [DEBUG] SteamClient: Emit event: <EMsg.ClientServersAvailable: 5501>
+2026-02-26 16:11:20,798 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.Multi: 1> | CMsgMulti)>
+2026-02-26 16:11:20,798 [DEBUG] SteamClient: Emit event: <EMsg.Multi: 1>
+2026-02-26 16:11:20,798 [DEBUG] SteamClient: Multi: Unpacking
+2026-02-26 16:11:20,798 [DEBUG] SteamClient: Incoming: <MsgProto(<EMsg.ClientFromGC: 5453> | CMsgGCClient)>
+2026-02-26 16:11:20,798 [DEBUG] SteamClient: Emit event: <EMsg.ClientFromGC: 5453>
+2026-02-26 16:11:20,798 [DEBUG] Dota2Client: Incoming: <EDOTAGCMsg.EMsgClientToGCGetProfileCardResponse: 7535>
+2026-02-26 16:11:20,798 [DEBUG] Dota2Client: Emit event: <EDOTAGCMsg.EMsgClientToGCGetProfileCardResponse: 7535>
+2026-02-26 16:11:20,798 [DEBUG] Dota2Client: Emit event: 'job_1'
+2026-02-26 16:11:20,799 [DEBUG] Dota2Client: Emit event: 'profile_card'
+2026-02-26 16:11:22,156 [DEBUG] SteamClient: Outgoing: <MsgProto(<EMsg.ClientHeartBeat: 703> | CMsgClientHeartBeat)>
+2026-02-26 16:11:23,831 [DEBUG] Connection: Disconnected.
+2026-02-26 16:11:23,831 [DEBUG] SteamClient: Emit event: 'disconnected'
